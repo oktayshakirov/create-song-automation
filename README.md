@@ -34,8 +34,9 @@ git clone --depth 1 https://github.com/ace-step/ACE-Step-1.5.git \
 cd ~/.local/share/ace-step/ACE-Step-1.5 && uv sync
 ```
 
-The client itself is standard library only. Models (~7.2GB) download on first
-`engine start`. See `docs/engine.md`.
+The client itself is standard library only. Models (~10.8GB) download on first
+`engine start`. One of them, the 1.7B LM, is never loaded but must not be
+deleted - `docs/engine.md` explains why that costs more than it saves.
 
 ## Use
 
@@ -101,7 +102,7 @@ field out and the model infers it.
 |---|---|
 | 40s vocal track, 8 steps | 71s |
 | 45s vocal track, 8 steps | 83s |
-| Model footprint | 7.2GB |
+| Model footprint | 10.8GB on disk (7.2GB loaded) |
 | Output | 24-bit/48kHz FLAC, ~1.4 Mbps |
 
 Roughly 2x realtime. Published "under 10 seconds" figures are RTX 3090

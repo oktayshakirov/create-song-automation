@@ -28,6 +28,18 @@ PID_PATH = Path(os.environ.get("SONG_ENGINE_PID", Path.home() / ".local/share/ac
 # The XL DiT and the 1.7B/4B LMs do not leave room on this box.
 LM_MODEL = os.environ.get("SONG_LM_MODEL", "acestep-5Hz-lm-0.6B")
 
+# The engine treats these four as one indivisible "main model". Its integrity
+# check (check_main_model_exists) requires *all* of them to hold weights, and
+# if any is missing it re-downloads the entire ~10GB snapshot - not just the
+# gap. acestep-5Hz-lm-1.7B is in here despite us loading the 0.6B, so deleting
+# it to reclaim 3.5GB silently arms a 10GB re-download on the next cold start.
+MAIN_MODEL_COMPONENTS = (
+    "acestep-v15-turbo",
+    "vae",
+    "Qwen3-Embedding-0.6B",
+    "acestep-5Hz-lm-1.7B",
+)
+
 ENV = {
     # Native Apple Silicon acceleration for the language model half.
     "ACESTEP_LM_BACKEND": "mlx",
@@ -36,6 +48,44 @@ ENV = {
     # "MPS backend out of memory" on a 16GB machine.
     "PYTORCH_MPS_HIGH_WATERMARK_RATIO": "0.0",
 }
+
+
+def missing_main_components() -> list[str]:
+    """Main-model components the engine would re-download the whole snapshot for.
+
+    Returns an empty list when the install is intact, or when there are no
+    checkpoints at all (a first run is a legitimate full download, not a gap).
+    """
+    checkpoints = ENGINE_HOME / "checkpoints"
+    if not checkpoints.exists():
+        return []
+    present = [c for c in MAIN_MODEL_COMPONENTS if (checkpoints / c).is_dir()]
+    if not present:
+        return []
+    return [c for c in MAIN_MODEL_COMPONENTS if not _holds_weights(checkpoints / c)]
+
+
+def _holds_weights(path: Path) -> bool:
+    if not path.is_dir():
+        return False
+    return any(
+        p.suffix in {".safetensors", ".bin", ".pt", ".pth", ".gguf"}
+        for p in path.rglob("*")
+    )
+
+
+def warn_if_incomplete() -> Optional[str]:
+    """Return a warning when a partial main model would trigger a big re-download."""
+    missing = missing_main_components()
+    if not missing:
+        return None
+    return (
+        "WARNING: these main-model components are missing: "
+        + ", ".join(missing)
+        + ".\nThe engine checks the main model as a unit, so the next cold "
+        "init will re-download the whole ~10GB snapshot rather than just "
+        "these. Restore them, or accept the re-download."
+    )
 
 
 def uv_binary() -> str:
@@ -57,6 +107,9 @@ def start(wait: bool = True, timeout: float = 900.0) -> str:
     engine = Engine()
     if engine.is_up():
         return "already running"
+    warning = warn_if_incomplete()
+    if warning:
+        print(warning)
     if not ENGINE_HOME.exists():
         raise EngineError(
             f"no ACE-Step checkout at {ENGINE_HOME}. See docs/engine.md for setup."

@@ -60,3 +60,24 @@ def test_http_errors_are_not_reported_as_an_unreachable_engine():
     # a rejected request must not look like a dead server.
     import urllib.error
     assert issubclass(urllib.error.HTTPError, urllib.error.URLError)
+
+
+def test_main_model_components_match_the_engine_definition():
+    # If upstream changes which components make up the "main model", the
+    # re-download guard goes stale and stops protecting anything. This pins
+    # our copy to the engine's own list.
+    from pathlib import Path
+
+    from song_automation.core.engine import ENGINE_HOME, MAIN_MODEL_COMPONENTS
+
+    source = ENGINE_HOME / "acestep/model_downloader.py"
+    if not source.exists():
+        import pytest
+        pytest.skip("engine checkout not present")
+
+    text = source.read_text()
+    block = text.split("MAIN_MODEL_COMPONENTS = [", 1)[1].split("]", 1)[0]
+    upstream = {line.split('"')[1] for line in block.splitlines() if '"' in line}
+    assert upstream == set(MAIN_MODEL_COMPONENTS), (
+        f"engine's main-model list changed to {upstream}; update engine.py"
+    )

@@ -37,12 +37,43 @@ roughly **2x the track length**, plus about 8s of LM time per job.
 | DiT | `acestep-v15-turbo` (4.5GB) | The XL variants do not fit in 11.8GB |
 | LM | `acestep-5Hz-lm-0.6B` (1.3GB) | 1.7B downloads by default and is unused; delete it |
 
-Plus `Qwen3-Embedding-0.6B` (1.1GB) and the VAE (322MB). **7.2GB total**, under
+Plus `Qwen3-Embedding-0.6B` (1.1GB) and the VAE (322MB). **7.2GB loaded**, under
 `<engine>/checkpoints/`.
 
-Note the first init downloads `acestep-5Hz-lm-1.7B` (3.5GB) whether you asked
-for it or not. Deleting it afterwards is safe; the server runs on the 0.6B it
-was told to load.
+## Do not delete the 1.7B LM
+
+The first init also downloads `acestep-5Hz-lm-1.7B` (3.5GB) whether you asked
+for it or not, and the server never loads it when told to use the 0.6B. It
+looks like 3.5GB of dead weight. It is not safe to delete.
+
+`MAIN_MODEL_COMPONENTS` in `acestep/model_downloader.py` treats four things as
+one indivisible main model:
+
+```python
+MAIN_MODEL_COMPONENTS = [
+    "acestep-v15-turbo",      # Default DiT model
+    "vae",
+    "Qwen3-Embedding-0.6B",
+    "acestep-5Hz-lm-1.7B",    # Default LM model (1.7B)
+]
+```
+
+`check_main_model_exists()` returns False unless **all four** hold weights, and
+a False sends `ensure_main_model()` to re-download the whole snapshot. So
+reclaiming 3.5GB arms a ~10GB download on the next cold start - a net loss of
+6.5GB and about five minutes.
+
+`--lm-model-path` selects which LM is *loaded*. It has no effect on what is
+*downloaded*.
+
+`core/engine.py` checks for this on every `engine start` and warns before you
+pay for it:
+
+```
+WARNING: these main-model components are missing: acestep-5Hz-lm-1.7B.
+The engine checks the main model as a unit, so the next cold init will
+re-download the whole ~10GB snapshot rather than just these.
+```
 
 ## Setup
 
@@ -63,8 +94,15 @@ Override the location with `ACESTEP_HOME`.
 `start_api_server_macos.sh` and its siblings are unusable unattended:
 
 - they use bash 4 parameter expansion (`${update_choice^^}`) and macOS ships
-  bash 3.2
-- they block on an interactive "update now?" prompt
+  bash 3.2. This parses fine - `bash -n` passes - and fails at runtime with
+  `bad substitution`, which under `set -euo pipefail` kills the script. It
+  only fires when the update check finds a new commit *and* you answer the
+  prompt, so the scripts appear to work until the day upstream moves.
+- they block on that interactive "update now?" prompt at all
+
+Eight of the launchers carry it, including `start_api_server_macos.sh`.
+`start_gradio_ui_macos.sh` - the one you would reach for to audition in the
+browser - is clean.
 
 `core/engine.py` launches the server process directly instead, with the three
 environment variables that matter:
@@ -105,8 +143,9 @@ DiT is resident, and the first request against a cold server blocks for minutes.
 
 ## Disk
 
-The install is ~8.5GB (7.2GB weights + 1.2GB venv), plus a 1.2GB `uv` cache
-that is safe to delete afterwards.
+The install is ~12GB: 10.8GB of weights (7.2GB loaded plus the 3.5GB 1.7B LM
+that must stay on disk, above) and a 1.2GB venv. The 1.2GB `uv` cache on top of
+that is a true cache and is safe to delete.
 
 Check free space with `df -h /System/Volumes/Data`. On macOS `df -h /` reports
 the sealed read-only system snapshot and will claim tens of gigabytes that do
