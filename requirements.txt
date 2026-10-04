@@ -1,0 +1,5 @@
+# The client is standard library only - no install needed.
+# The engine (ACE-Step 1.5) brings its own venv, see docs/engine.md.
+#
+# For the tests:
+pytest>=8.0

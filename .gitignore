@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+.venv/
+
+# Songs are work product, not source. Lyrics and renders stay local.
+projects/*
+!projects/.gitkeep
+out/
+*.flac
+*.wav
+*.mp3
