@@ -113,3 +113,15 @@ This tooling is MIT. ACE-Step 1.5 is MIT, which means songs you generate are
 yours commercially, with no subscription. That is not true of Suno or
 ElevenLabs, where commercial rights are tied to an active plan - and it does
 not extend to covering recordings you do not own.
+
+## Example
+
+`examples/night-shift.md` is a complete song file that renders clean:
+
+```bash
+python -m song_automation plan   examples/night-shift.md
+python -m song_automation render examples/night-shift.md -o ~/Desktop/songs
+```
+
+Your own songs go in `projects/`, which is git-ignored - lyrics are work
+product, and this repo is public.
