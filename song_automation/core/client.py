@@ -190,17 +190,19 @@ class Engine:
     def _get(self, path: str) -> Dict[str, Any]:
         return self._request("GET", path, None)
 
-    def _post(self, path: str, payload: Dict[str, Any], unwrap: bool = True):
-        return self._request("POST", path, payload, unwrap=unwrap)
+    def _post(self, path: str, payload: Dict[str, Any], unwrap: bool = True,
+              timeout: Optional[int] = None):
+        return self._request("POST", path, payload, unwrap=unwrap, timeout=timeout)
 
-    def _request(self, method: str, path: str, payload, unwrap: bool = True):
+    def _request(self, method: str, path: str, payload, unwrap: bool = True,
+                 timeout: Optional[int] = None):
         url = self.base_url + path
         body = json.dumps(payload).encode() if payload is not None else None
         req = urllib.request.Request(url, data=body, method=method)
         if body:
             req.add_header("Content-Type", "application/json")
         try:
-            with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+            with urllib.request.urlopen(req, timeout=timeout or self.timeout) as resp:
                 raw = json.loads(resp.read().decode())
         except urllib.error.HTTPError as exc:
             # HTTPError subclasses URLError, so it must be caught first or a

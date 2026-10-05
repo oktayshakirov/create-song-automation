@@ -87,6 +87,12 @@ cd ~/.local/share/ace-step/ACE-Step-1.5 && uv sync
 Then `python -m song_automation engine start`. First start downloads the
 weights, which took about 5 minutes here.
 
+**A cold start costs about five minutes even once the weights are on disk** -
+that is the DiT and LM loading into unified memory, not downloading. Start the
+engine before you need it, and leave it running for the session. `engine start`
+returns as soon as the server is *listening*, which is long before it can
+render; `engine ready` blocks until the weights are actually resident.
+
 Override the location with `ACESTEP_HOME`.
 
 ## Why we do not use the vendored launch scripts
@@ -140,6 +146,11 @@ python -m song_automation engine stop     # frees ~8GB
 `status` reporting "up" is not the same as ready: the server listens before the
 DiT is resident, and the first request against a cold server blocks for minutes.
 `render` calls `ensure_ready()` for you.
+
+`/v1/init` is synchronous and loads ~8GB, so it routinely outlives any sane
+HTTP timeout. A timeout there does not cancel the load - the server keeps
+going - so `ensure_ready()` swallows it and polls `/health` instead, which is
+the only trustworthy readiness signal.
 
 ## Disk
 

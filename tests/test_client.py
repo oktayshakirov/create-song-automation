@@ -81,3 +81,14 @@ def test_main_model_components_match_the_engine_definition():
     assert upstream == set(MAIN_MODEL_COMPONENTS), (
         f"engine's main-model list changed to {upstream}; update engine.py"
     )
+
+
+def test_requests_accept_a_per_call_timeout():
+    # /v1/init loads ~8GB and routinely outlives the default 30s timeout.
+    # Without a per-call override, ensure_ready() could never wait it out.
+    import inspect
+
+    from song_automation.core.client import Engine
+
+    for name in ("_post", "_request"):
+        assert "timeout" in inspect.signature(getattr(Engine, name)).parameters

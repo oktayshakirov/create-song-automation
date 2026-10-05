@@ -157,7 +157,19 @@ def ensure_ready(timeout: float = 900.0) -> None:
         start(wait=True, timeout=timeout)
     if engine.is_ready():
         return
-    engine._post("/v1/init", {"model": "acestep-v15-turbo", "init_llm": True})  # noqa: SLF001
+    # /v1/init is synchronous and loads ~8GB, which takes minutes. The default
+    # 30s client timeout is far too short, and a timeout here does not cancel
+    # the work - the server keeps loading - so we swallow it and fall through
+    # to polling health, which is the real readiness signal either way.
+    try:
+        engine._post(  # noqa: SLF001
+            "/v1/init",
+            {"model": "acestep-v15-turbo", "init_llm": True},
+            timeout=int(timeout),
+        )
+    except EngineError:
+        pass
+
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
         if engine.is_ready():
