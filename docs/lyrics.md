@@ -91,6 +91,28 @@ From the engine's own guide, red flags:
 One core metaphor per song, explored from several angles, beats five metaphors
 touched once each.
 
+## Writing in a language other than English
+
+Fifty are supported. Set `language:` - and spell the words properly, with
+umlauts and accents intact. The model phonemises from spelling, so ASCII
+transliterations like `wuerd` for `würd` or `gaeb` for `gäb` invite a
+mispronunciation.
+
+The syllable linter is language-aware but only roughly:
+
+- It counts vowel groups, which works in English and is workable in German
+  and the Romance languages, landing within a syllable or two.
+- The silent terminal `-e` rule applies to English and French only. German
+  `Kette` and `Name` are two syllables each, and treating them as one
+  undercounts every line ending in a schwa.
+- For non-Latin scripts (`ja`, `zh`, `ko`, `ar`, `he`, `hi`, `ru`, `th` and
+  the rest) the count means nothing, so the check is skipped and says so.
+  Judge those line lengths by ear.
+
+Since the lint only ever compares lines inside one section against each other,
+a consistent bias is harmless. An inconsistent one is not, which is why the
+rules above are per-language rather than global.
+
 ## Languages
 
 Fifty, plus `unknown`. Set `language:`, though it is usually detected from the

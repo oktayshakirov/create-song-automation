@@ -247,9 +247,22 @@ def lint(song: Song) -> List[str]:
                 warnings.append(f"[{tag}] is not a documented tag; it may be sung aloud.")
 
         # Syllable alignment: the model maps syllables onto beats, so wildly
-        # uneven lines inside a section sing badly.
-        for section, lines in _sections(song.lyrics).items():
-            counts = [_syllables(ln) for ln in lines if ln.strip()]
+        # uneven lines inside a section sing badly. Only checked where the
+        # counter means something - see _NON_LATIN_LANGUAGES.
+        sections = (
+            {} if song.language in _NON_LATIN_LANGUAGES
+            else _sections(song.lyrics)
+        )
+        if song.language in _NON_LATIN_LANGUAGES:
+            warnings.append(
+                f"syllable balance not checked: the counter is Latin-script only "
+                f"and says nothing useful about {song.language!r}. Check line "
+                "lengths by ear."
+            )
+        for section, lines in sections.items():
+            counts = [
+                _syllables(ln, song.language) for ln in lines if ln.strip()
+            ]
             if len(counts) >= 2 and max(counts) - min(counts) > 6:
                 warnings.append(
                     f"[{section}] line lengths vary a lot ({min(counts)}-{max(counts)} "
@@ -295,14 +308,46 @@ def _sections(lyrics: str) -> Dict[str, List[str]]:
     return out
 
 
-def _syllables(line: str) -> int:
-    """Rough English syllable count. Good enough to spot a lopsided section."""
-    words = re.findall(r"[a-zA-Z']+", line.lower())
+# Languages whose syllables this counter cannot see at all: it works by
+# counting vowel groups in a Latin alphabet, which says nothing useful about
+# a logographic or abugida script. The lint skips the check for these rather
+# than report a confident wrong number.
+_NON_LATIN_LANGUAGES = {
+    "zh", "yue", "ja", "ko", "th", "he", "ar", "fa", "ur", "hi", "bn", "pa",
+    "ta", "te", "ne", "sa", "el", "bg", "ru", "uk", "sr",
+}
+
+# Accented vowels carry syllables too. Without these in the character class,
+# "wuerd" spelled properly as "würd" reduces to "wrd" and the count is right
+# only by accident.
+_WORD_RE = re.compile(r"[a-zà-öø-ÿ']+", re.IGNORECASE)
+_VOWEL_RE = re.compile(r"[aeiouyàáâãäåèéêëìíîïòóôõöùúûüýÿ]+", re.IGNORECASE)
+
+
+# Languages where a terminal -e is silent. In German it is not: "Kette" and
+# "Name" are two syllables each, and applying the English rule to them
+# undercounts every line that ends in a schwa.
+_SILENT_FINAL_E = {"en", "fr"}
+
+
+def _syllables(line: str, language: str = "en") -> int:
+    """Rough syllable count for Latin-script lyrics.
+
+    Counts vowel groups, which is a decent proxy in English and workable in
+    German and the Romance languages. It is only ever used to compare lines
+    against each other inside one section, so a consistent bias is harmless
+    where an inconsistent one would not be.
+    """
+    silent_e = language in _SILENT_FINAL_E
     total = 0
-    for word in words:
-        groups = re.findall(r"[aeiouy]+", word)
-        count = len(groups)
-        if word.endswith("e") and count > 1 and not word.endswith(("le", "ee", "ye")):
+    for word in _WORD_RE.findall(line.lower()):
+        count = len(_VOWEL_RE.findall(word))
+        if (
+            silent_e
+            and word.endswith("e")
+            and count > 1
+            and not word.endswith(("le", "ee", "ye"))
+        ):
             count -= 1
         total += max(1, count)
     return total

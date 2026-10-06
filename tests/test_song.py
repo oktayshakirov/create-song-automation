@@ -169,3 +169,42 @@ def test_staging_rewrites_paths_the_engine_would_reject():
     finally:
         if temporary:
             os.unlink(staged)
+
+
+def test_silent_final_e_is_english_only():
+    # German "Kette" and "Name" are two syllables each. Applying the English
+    # silent-e rule to them undercut every German line ending in a schwa.
+    assert _syllables("Kette", "de") == 2
+    assert _syllables("Name", "de") == 2
+    assert _syllables("move", "en") == 1
+    assert _syllables("table", "en") == 2
+
+
+def test_accented_vowels_count_as_syllables():
+    # Before umlauts were in the character class, "würd" split into "w" + "rd"
+    # and scored 2 instead of 1 - right only by accident.
+    assert _syllables("würd", "de") == 1
+    assert _syllables("gäb", "de") == 1
+    assert _syllables("für", "de") == 1
+
+
+def test_german_lines_count_close_to_truth():
+    import pytest
+    pairs = [
+        ("Kapuze auf, ich tu so, als würd ich sie nicht kennen", 14),
+        ("GÄB DIE KETTE für die Art, wie sie mein Name sagt", 13),
+    ]
+    for line, actual in pairs:
+        assert _syllables(line, "de") == pytest.approx(actual, abs=2)
+
+
+def test_syllable_lint_is_skipped_for_non_latin_scripts():
+    # A vowel-group counter says nothing about Japanese, so the lint says so
+    # rather than reporting a confident wrong number.
+    song = parse_song_text(
+        "# T\nstyle: a, b, c, d vocal\nlanguage: ja\nseed: 1\nduration: 60\n"
+        "---\n[verse]\nなにか\nもっとながいぎょう\n"
+    )
+    notes = lint(song)
+    assert any("not checked" in w for w in notes)
+    assert not any("syllable" in w and "vary" in w for w in notes)
