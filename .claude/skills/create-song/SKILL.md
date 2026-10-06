@@ -1,9 +1,9 @@
 ---
-name: song
-description: Write lyrics and render them as finished songs locally with the ACE-Step pipeline in song-automation. Use when the user runs /song, asks for a song, a track, a beat or an instrumental, wants lyrics written or turned into music, wants a song in a particular genre, wants an existing track re-recorded in another style or one section of it fixed, or asks about song prompting, structure tags or render settings. For narration use audio-book; for videos use video-crypto / video-tinnitus / video-drone.
+name: create-song
+description: Write lyrics and render them as finished songs locally with the ACE-Step pipeline in song-automation. Use when the user runs /create-song, asks for a song, a track, a beat or an instrumental, wants lyrics written or turned into music, wants a song in a particular genre, wants an existing track re-recorded in another style or one section of it fixed, or asks about song prompting, structure tags or render settings. For narration use audio-book; for videos use video-crypto / video-tinnitus / video-drone.
 ---
 
-# Song
+# Create song
 
 Write lyrics, render them as songs on this machine, for free. Local ACE-Step
 1.5, lossless output, every take reproducible by seed.
