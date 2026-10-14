@@ -35,7 +35,7 @@ roughly **2x the track length**, plus about 8s of LM time per job.
 | Slot | Chosen | Why |
 |---|---|---|
 | DiT | `acestep-v15-turbo` (4.5GB) | The XL variants do not fit in 11.8GB |
-| LM | `acestep-5Hz-lm-0.6B` (1.3GB) | 1.7B downloads by default and is unused; delete it |
+| LM | `acestep-5Hz-lm-0.6B` (1.3GB) | 1.7B downloads by default and is never loaded, but do not delete it - see below |
 
 Plus `Qwen3-Embedding-0.6B` (1.1GB) and the VAE (322MB). **7.2GB loaded**, under
 `<engine>/checkpoints/`.
