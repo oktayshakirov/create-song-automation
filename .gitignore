@@ -1,0 +1,18 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.DS_Store
+
+# Exports and renders. Audio is large, and it is NOT regenerable: record every
+# kept take's engine ID or link in its project's Takes table, and back the file
+# up somewhere other than this repo.
+out/
+*.mp3
+*.wav
+*.m4a
+*.flac
+
+# Working notes.
+HANDOFF.md

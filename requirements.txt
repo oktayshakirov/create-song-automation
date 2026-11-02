@@ -1,0 +1,2 @@
+# The engine is standard library only. This is for the tests.
+pytest>=8
