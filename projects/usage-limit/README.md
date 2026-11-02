@@ -1,10 +1,12 @@
-# Usage Limit (working title)
+# Come Back at Five
 
 A funny trap song about hitting Claude's usage limit. It is the first song
 in this repo, and the "Claude's Plan" riff that started the idea is a title
 pattern for later, not this song's title.
 
-**Status:** topic picked. Angle, hook and lyrics are next.
+**Status:** first full draft written on 2026-11-02 and waiting for the user's
+review. Then the facts marked snippet or memory in `SOURCES.md` need checking,
+then export. The user delegated the angle and hook choice for this draft.
 
 ## Why this topic
 
@@ -30,19 +32,28 @@ explaining.
 
 - **Genre:** trap, funny, played straight (see `docs/trap.md`).
 - **Render:** later. The engine is undecided (see `docs/engines.md`).
+- **Length:** about 90 seconds, per the user. That means one verse, three
+  hooks and a spoken bridge, with no second verse.
+- **Angle:** a flex song that falls apart. A vibe coder brags about the Max
+  plan, gets limited mid-flex, and grieves. Picked because the fall is the
+  joke, and it lets the beat stay menacing.
+- **Hook and title:** "Limit reached, come back at five". It is 7
+  syllables, rides the "ai" vowel, and ties in the five-hour window.
+- **Final hook twist:** the weekly limit hits right after the reset. It is
+  true (`SOURCES.md` row 9), and it is the biggest laugh, so it goes last.
+- **Outro loops to the intro** ("one more prompt"), so the song works on
+  repeat in short-form clips.
 
-## Open, for the user to pick
+## Open
 
-1. **Angle:** who is singing to whom? Some starting points:
-   - a breakup song with the rate limiter ("it's not you, it's my quota")
-   - a flex song that falls apart: bragging about the Max plan, then getting
-     limited mid-verse
-   - five stages of grief, counting down to the reset time
-   - Claude's side: apologising, cheerfully, for the fourth time today
-2. **Title:** usually the hook phrase.
-3. **Hook:** three options, then freeze one.
-4. **Banned lines:** if the song riffs on a famous track, list its known
-   lines in the sheet's `Banned:` field.
+- The user's review of the draft.
+- The verse line "twenty one percent, then a hundred, one prompt" rests on a
+  single snippet-level report (row 2). Confirm it, or soften it to a
+  feeling.
+- Rows 8 to 12 need upgrading before release.
+- Alternative angles, if the draft does not land: a breakup song with the
+  rate limiter, five stages of grief counting down to the reset, or Claude's
+  side, apologising cheerfully for the fourth time today.
 
 ## Facts the jokes can use
 
