@@ -10,6 +10,40 @@ changes. Next is generating takes in Suno by hand from
 release, the facts marked snippet or memory in `SOURCES.md` still need
 checking. The user delegated the angle and hook choice for the first draft.
 
+## Handoff (2026-11-03, cloud session to local)
+
+Where it stands:
+
+- **Lyrics: approved.** `song.md` passes `check` with one warning kept on
+  purpose: the spoken bridge line "The docs don't say you're absolutely
+  right" runs long, which is fine for a spoken line. Do not rewrite the
+  lyrics unless the user asks.
+- **Branch:** `song/come-back-at-five`, draft PR
+  oktayshakirov/create-song-automation#1. It is not merged into `main` yet.
+- **Export:** regenerate it with
+  `python -m song_automation export projects/usage-limit/song.md`. `out/` is
+  git-ignored, so the cloud session's copy did not come across.
+- **Render:** the user generates the audio on their own machine, in their
+  usual way. The repo's `docs/engines.md` still says the engine is
+  undecided, so ask which engine and settings they use, then record it there.
+  If the engine has form limits, check them against `export.py`'s assumed
+  1000-character style prompt and 5000-character lyrics.
+
+Next:
+
+1. Export, then generate takes the user's way. Expect garbled ad-libs and
+   dropped spoken parts, and regenerate rather than accept them.
+2. Log every kept take in **Takes** below: engine, model version, ID or file
+   path, date, and what is good or bad. A take cannot be regenerated.
+3. If a take goes wrong because of the lyrics or style prompt, fix
+   `song.md`, re-run `check`, and record the lesson in `docs/engines.md` or
+   `docs/trap.md`.
+4. Before release, upgrade `SOURCES.md` rows 2 and 8 to 12. The cloud
+   session's network blocked the source sites. Row 2 ("twenty one percent,
+   then a hundred, one prompt") rests on a single report: confirm it or
+   soften the line. Then work through the release checklist in
+   `docs/originality.md`.
+
 ## Why this topic
 
 Picked on 2026-11-02 from four trending Claude topics: usage limits, the
