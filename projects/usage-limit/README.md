@@ -124,9 +124,9 @@ legal advice.
 
 ## Facts the jokes can use
 
-Every row in `SOURCES.md` is currently **snippet** or **memory** status: seen
-in search summaries, not read. **Read and upgrade a row before a lyric
-depends on it.**
+Every row a lyric uses (2 and 8 to 12) was read on 2026-11-03 and is
+verified or reported. The rest are still **snippet** status. **Read and
+upgrade a row before a new lyric depends on it.**
 
 ## Takes
 
