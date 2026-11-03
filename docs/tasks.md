@@ -58,6 +58,25 @@ python -m song_automation repaint ~/Desktop/songs/night-shift.flac \
 We always send `chunk_mask_mode="explicit"`. Without it the range is a hint and
 the model picks its own region.
 
+**Pass `--song` for any range with a vocal in it.** It sends the song file's
+full lyrics (and its style, unless `--style` overrides it). The engine treats
+`lyrics` as an input for repaint too, and without it there are no words to
+sing: a dropped line comes back as mumble, not as the line. Send the whole
+song's lyrics, not just the section's.
+
+```bash
+python -m song_automation repaint ~/Desktop/songs/come-back-at-five-take1.flac \
+  --song projects/come-back-at-five.md --from 31 --to 59.4
+```
+
+Each repaint's filename carries its seed, so several attempts at one range
+sit side by side.
+
+**Find the range by transcribing, not by guessing.** A local Whisper pass
+(`mlx-whisper`, `whisper-large-v3-turbo`) gives per-line timestamps and shows
+which lines a take dropped or garbled. It caught a 16-line rap verse sung in
+28 seconds with three lines missing and one sung twice.
+
 ## Not available without the base model
 
 | Task | What it would do |

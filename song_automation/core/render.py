@@ -144,11 +144,16 @@ def render_repaint(
     audio_format: str = "flac",
     engine: Optional[Engine] = None,
     report: Reporter = None,
+    lyrics: Optional[str] = None,
 ) -> Take:
     """Regenerate one time range of a track, leaving the rest alone.
 
     This is the tool for a bad bridge or a garbled line - it is far cheaper
     than re-rolling the whole song and losing the parts that worked.
+
+    Pass the song's full lyrics for any range with a vocal in it. Without
+    them the model repaints the range with no words to sing, and a dropped
+    line comes back as mumble rather than as the line.
     """
     src_audio = Path(src_audio).expanduser().resolve()
     if not src_audio.exists():
@@ -173,6 +178,8 @@ def render_repaint(
     }
     if seed is not None:
         payload["seed"] = seed
+    if lyrics:
+        payload["lyrics"] = lyrics
 
     _say(report, f"repainting {src_audio.name} from {start}s to {end}s")
     try:
@@ -181,7 +188,9 @@ def render_repaint(
     finally:
         if temporary:
             os.unlink(staged)
-    title = f"{src_audio.stem}-repaint-{start:.0f}-{end:.0f}"
+    # The seed is in the name so that auditioning several repaints of one
+    # range does not overwrite the earlier ones.
+    title = f"{src_audio.stem}-repaint-{start:.0f}-{end:.0f}-s{result.seed}"
     take = _keep(result, None, out_dir, 0, 1, "repaint", payload, title=title)
     _say(report, f"  {take.describe()}")
     return take

@@ -72,7 +72,9 @@ def main(argv=None) -> int:
 
     p_repaint = sub.add_parser("repaint", help="regenerate one time range of a track")
     p_repaint.add_argument("src")
-    p_repaint.add_argument("--style", required=True)
+    p_repaint.add_argument("--song", help="song file whose lyrics (and style, "
+                           "unless --style is given) the range is sung from")
+    p_repaint.add_argument("--style")
     p_repaint.add_argument("--from", dest="start", type=float, required=True)
     p_repaint.add_argument("--to", dest="end", type=float, required=True)
     p_repaint.add_argument("--seed", type=int)
@@ -105,8 +107,15 @@ def _dispatch(args) -> int:
         print(f"\n{take.path}")
         return 0
     if args.command == "repaint":
-        take = render_repaint(Path(args.src), args.style, args.start, args.end,
-                              Path(args.out), seed=args.seed, report=print)
+        song = parse_song(args.song) if args.song else None
+        style = args.style or (song.style if song else None)
+        if not style:
+            print("error: repaint needs --style, or --song to take it from",
+                  file=sys.stderr)
+            return 1
+        take = render_repaint(Path(args.src), style, args.start, args.end,
+                              Path(args.out), seed=args.seed, report=print,
+                              lyrics=song.lyrics if song else None)
         print(f"\n{take.path}")
         return 0
     return 1

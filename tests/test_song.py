@@ -208,3 +208,37 @@ def test_syllable_lint_is_skipped_for_non_latin_scripts():
     notes = lint(song)
     assert any("not checked" in w for w in notes)
     assert not any("syllable" in w and "vary" in w for w in notes)
+
+
+def test_repaint_sends_lyrics_and_keeps_each_seed():
+    # Without lyrics the engine repaints a vocal range with nothing to sing,
+    # which is how a dropped line came back as mumble. And two repaints of one
+    # range must not overwrite each other.
+    import tempfile
+    from pathlib import Path
+
+    from song_automation.core.client import JobResult
+    from song_automation.core.render import render_repaint
+
+    work = Path(tempfile.mkdtemp())
+    src = work / "track.flac"
+    src.write_bytes(b"not really audio")
+    sent = []
+
+    class FakeEngine:
+        def submit(self, payload):
+            sent.append(dict(payload))
+            return "job"
+
+        def poll(self, task_id, on_progress=None):
+            out = work / f"engine-{len(sent)}.flac"
+            out.write_bytes(b"audio")
+            return JobResult("job", str(out), 100 + len(sent), 8.0, None, "",
+                             None, {})
+
+    a = render_repaint(src, "trap", 31, 59, work / "out", engine=FakeEngine(),
+                       lyrics="[verse]\nline one\n")
+    b = render_repaint(src, "trap", 31, 59, work / "out", engine=FakeEngine())
+    assert sent[0]["lyrics"] == "[verse]\nline one\n"
+    assert "lyrics" not in sent[1]
+    assert a.path != b.path and a.path.exists() and b.path.exists()
