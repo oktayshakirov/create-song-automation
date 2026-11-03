@@ -16,7 +16,8 @@ from memory.
   status. Do not upgrade a status you did not check.
 - **Suggest, do not pick.** Topic, angle and hook are the user's choice:
   offer options with a recommendation.
-- Rendering is not built yet, and the engine is undecided. Do not build it
-  unless asked.
+- Rendering is not built here. The user renders with ACE-Step 1.5 locally,
+  through the sibling `song-automation` repo (see `docs/engines.md`). Do not
+  build a renderer here unless asked.
 - Record any lesson in the narrowest doc that covers it, and add a
   `CHANGELOG.md` entry for engine changes.

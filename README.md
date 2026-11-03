@@ -20,8 +20,8 @@ Sibling projects: [audio-book-automation](https://github.com/oktayshakirov/audio
   `SOURCES.md`. A funny song about a real product that gets the facts wrong is
   just a wrong song.
 
-Rendering is **not built yet**. The engine choice is open: see
-[`docs/engines.md`](docs/engines.md).
+Rendering is **not built here**. Songs are rendered with ACE-Step 1.5 locally,
+through a sibling repo: see [`docs/engines.md`](docs/engines.md).
 
 ## Install
 
@@ -104,4 +104,4 @@ song ID or link, and the audio file is kept somewhere backed up.
 | [`docs/trap.md`](docs/trap.md) | Genre conventions: tempo, structure, flow, ad-libs |
 | [`docs/sourcing.md`](docs/sourcing.md) | Jokes about real things have to be true |
 | [`docs/originality.md`](docs/originality.md) | Riffing on a famous song without copying it, and release rules |
-| [`docs/engines.md`](docs/engines.md) | Suno, ACE-Step and the open render decision |
+| [`docs/engines.md`](docs/engines.md) | The render engine (ACE-Step, local), its form limits, Suno for reference |
