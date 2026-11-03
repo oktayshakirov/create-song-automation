@@ -55,6 +55,24 @@ the export into an ACE-Step song file:
 - Set `duration:` from the line count, and leave `seed:` blank for the first
   take, then pin it.
 
+## What the first song taught
+
+From "Come Back at Five", the first song rendered (2026-11-03):
+
+- **ACE-Step drops lines from a long verse.** Its 16-line verse lost two
+  to four lines in every render, at 115, 130 and 145 seconds, and a
+  different set each time. One take also sang a line twice. Listen to every
+  verse against the sheet, or transcribe it.
+- **Transcribe takes to check the words.** A local Whisper pass
+  (`mlx-whisper` with `whisper-large-v3-turbo`) gives timestamps per line and
+  shows dropped, doubled and garbled lines in a minute. It mishears over a
+  beat too, so confirm by ear before cutting a take on its word.
+- **A missing line needs a new take.** Repaint keeps the source's length and
+  cannot fit lines back in, and the same seed at a new `duration:` is a
+  different song. The details are in the sibling repo's `docs/tasks.md`.
+- **Untested idea for the next song:** split a 16-line verse into two
+  8-line `[Verse]` blocks, and see whether shorter sections stop the drops.
+
 ## Suno, for reference
 
 Not used for this repo's songs so far. If a song moves to Suno: it has no
