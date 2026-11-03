@@ -66,15 +66,18 @@ The checker cannot hear.
 python -m song_automation export projects/<slug>/song.md
 ```
 
-Rendering is not built yet (see `engines.md`). Until it is, paste
-`out/<slug>/suno.txt` into the engine by hand.
+Rendering is not built here. Translate `out/<slug>/suno.txt` into an
+ACE-Step song file in the sibling `song-automation` repo and render it there.
+`engines.md` lists what changes in the translation: ACE-Step's limits are
+tighter than the ones `check` assumes.
 
 ## 9. Takes
 
 Generate several takes. For every take worth keeping, add a row to the
-project's `Takes` table: the engine, its model version, the song ID or link,
-the date, and what is good and bad about it. A take is not reproducible, so
-the row is the only record.
+project's `Takes` table: the engine, its model version, the seed and file
+path (or song ID or link), the date, and what is good and bad about it. On
+ACE-Step the seed plus the song file reproduces a take. On other engines it
+may not, so the row is the only record.
 
 ## 10. Lessons
 

@@ -5,8 +5,8 @@ in this repo, and the "Claude's Plan" riff that started the idea is a title
 pattern for later, not this song's title.
 
 **Status:** the user approved the lyrics on 2026-11-03, after one round of
-changes. Next is generating takes in Suno by hand from
-`out/usage-limit/suno.txt`, then logging them in the Takes table. Before
+changes. Next is rendering takes with ACE-Step 1.5 locally (decided
+2026-11-03, see `docs/engines.md`), then logging them in the Takes table. Before
 release, the facts marked snippet or memory in `SOURCES.md` still need
 checking. The user delegated the angle and hook choice for the first draft.
 
@@ -67,7 +67,9 @@ explaining.
 ## Decided
 
 - **Genre:** trap, funny, played straight (see `docs/trap.md`).
-- **Render:** later. The engine is undecided (see `docs/engines.md`).
+- **Render:** ACE-Step 1.5 turbo, locally on the user's M2 Pro through the
+  sibling `song-automation` repo (decided 2026-11-03). It is free, and takes
+  are reproducible by seed.
 - **Length:** about 90 seconds, per the user. That means one verse, three
   hooks and a spoken bridge, with no second verse.
 - **Angle:** a flex song that falls apart. A vibe coder brags about the Max
@@ -85,8 +87,9 @@ explaining.
   and interrupts the task. It sits before the usage-bar lines, so the rerun
   is what burns the limit. The verse is now 16 bars, about 95 seconds in
   all.
-- **Generation:** Suno by hand for this song. The session container has no
-  GPU, so a local engine is not an option here.
+- **Generation:** the cloud session planned Suno by hand because its container
+  had no GPU. Superseded on 2026-11-03: the user renders locally with
+  ACE-Step (see Render).
 
 ## Open
 
@@ -107,5 +110,5 @@ depends on it.**
 
 ## Takes
 
-| # | Engine + model | ID / link | Date | Notes |
+| # | Engine + model | Seed, file | Date | Notes |
 |---|---|---|---|---|
