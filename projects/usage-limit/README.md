@@ -5,8 +5,9 @@ in this repo, and the "Claude's Plan" riff that started the idea is a title
 pattern for later, not this song's title.
 
 **Status:** the user approved the lyrics on 2026-11-03, after one round of
-changes. Next is rendering takes with ACE-Step 1.5 locally (decided
-2026-11-03, see `docs/engines.md`), then logging them in the Takes table. Before
+changes. Rendered with ACE-Step 1.5 locally on 2026-11-03; take 1 in the
+Takes table is the keeper. Next: settle the "twenty one percent" line (row 2
+is secondhand), then the release checklist in `docs/originality.md`. Before
 release, the facts marked snippet or memory in `SOURCES.md` still need
 checking. The user delegated the angle and hook choice for the first draft.
 
@@ -110,5 +111,10 @@ depends on it.**
 
 ## Takes
 
+Every take renders from `ace-step.md`, the ACE-Step translation of
+`song.md`: the same lyric lines with ACE-Step tags and header. Set its
+`seed:` and `duration:` to a row's values to reproduce that take.
+
 | # | Engine + model | Seed, file | Date | Notes |
 |---|---|---|---|---|
+| 1 | ACE-Step 1.5, DiT `acestep-v15-turbo`, LM `acestep-5Hz-lm-0.6B`, 8 steps | seed 743206035, 145s, D minor, 140 bpm; `~/Desktop/songs/come-back-at-five-s743206035-145s.flac` (sha256 `287c6cd14f6e1d7c…`) | 2026-11-03 | **Kept.** Good: the vocal is clear; the laptop couplet and "you're absolutely right, of course, boss" land, and so do the spoken bridge, the Thursday twist and the outro loop. Bad, per a Whisper transcript (check by ear): drops "Woke up, terminal open, coffee hot" and "Ten agents running, I'm the boss of the bots", and runs "Compacting conversation" straight into "had the whole team proud", losing "now my genius is gone" and "Max plan flexing". |
