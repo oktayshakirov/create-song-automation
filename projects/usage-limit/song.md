@@ -41,7 +41,7 @@ Came back, task interrupted, gotta run it all back
 Shipped three features and it's not even nine (ayy)
 Then I watched that little usage bar climb
 Twenty one percent, then a hundred, one prompt (what?)
-> SOURCES row 2. Snippet only: confirm before release, or soften.
+> SOURCES row 2, reported (secondhand). Kept as sung on 2026-11-03: the character's own claim, matching what users reported.
 Compacting conversation, now my genius is gone
 > SOURCES row 12
 Max plan flexing, had the whole team proud
