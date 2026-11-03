@@ -29,9 +29,15 @@ So I'm touching grass till my AI's alive
 [Verse 1]
 Woke up, terminal open, coffee hot (skrrt)
 Ten agents running, I'm the boss of the bots
-Told it build me Uber, but for cats (meow)
-It said you're absolutely right, and it ran with that
+Told it build me Tinder, but for horses (Fireship)
+> The Fireship ad-lib credits the joke to the programming YouTube channel. User's request.
+It said you're absolutely right, of course, boss
 > SOURCES row 11
+Laptop on my lap and it's cooking my thighs (tss)
+Fan screaming like a jet about to fly (whoosh)
+Went to grab a snack and the laptop took a nap (nooo)
+Came back, task interrupted, gotta run it all back
+> The rerun is what burns the usage: it sets up the next couplet.
 Shipped three features and it's not even nine (ayy)
 Then I watched that little usage bar climb
 Twenty one percent, then a hundred, one prompt (what?)
