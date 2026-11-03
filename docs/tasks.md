@@ -59,15 +59,16 @@ We always send `chunk_mask_mode="explicit"`. Without it the range is a hint and
 the model picks its own region.
 
 **Pass `--song` for any range with a vocal in it.** It sends the song file's
-full lyrics (and its style, unless `--style` overrides it). The engine treats
+lyrics (and its style, unless `--style` overrides it). The engine treats
 `lyrics` as an input for repaint too, and without it there are no words to
-sing: a dropped line comes back as mumble, not as the line. Send the whole
-song's lyrics, not just the section's.
+sing.
 
-```bash
-python -m song_automation repaint ~/Desktop/songs/come-back-at-five-take1.flac \
-  --song projects/come-back-at-five.md --from 31 --to 59.4
-```
+**A repaint cannot put back a line the take dropped.** It keeps the source's
+length, so a section that was crammed stays crammed. Given the whole song's
+lyrics it also does not know which lines belong in the range: on "Come Back
+at Five" two repaints of a 28-second verse re-sang hook lines inside it and
+garbled the missing couplet. Repaint fixes a bad performance of lines that
+are there. For lines that are missing, re-render with a longer `duration:`.
 
 Each repaint's filename carries its seed, so several attempts at one range
 sit side by side.
@@ -117,6 +118,12 @@ seed into the song file to lock it.
 To lock this take, add to projects/night-shift.md:
   seed: 4242
 ```
+
+**A seed is only reproducible with everything else fixed.** Changing
+`duration:` with the same seed gives a different song, not a stretched one:
+seed 743206035 came out in B minor at 115s, G# minor at 130s and D minor at
+145s, with different lines dropped each time. So a good take cannot be
+lengthened to fit missing lines. Bracket the duration and pick a new take.
 
 `takes: 4` renders four variations - the first honours a pinned seed, the rest
 explore. Takes are sequential rather than batched, because `batch_size` holds
