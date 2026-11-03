@@ -6,8 +6,9 @@ pattern for later, not this song's title.
 
 **Status:** the user approved the lyrics on 2026-11-03, after one round of
 changes. Rendered with ACE-Step 1.5 locally on 2026-11-03; take 1 in the
-Takes table is the keeper. Next: settle the "twenty one percent" line (row 2
-is secondhand), then the release checklist in `docs/originality.md`. Before
+Takes table is the keeper, and the release checklist is done (see Release).
+Left before release: the cover art, back up the FLAC, and tick the AI
+disclosure on each platform at upload. Before
 release, the facts marked snippet or memory in `SOURCES.md` still need
 checking. The user delegated the angle and hook choice for the first draft.
 
@@ -94,14 +95,32 @@ explaining.
 
 ## Open
 
-- The user's review of the draft.
-- The verse line "twenty one percent, then a hundred, one prompt" rests on a
-  single snippet-level report (row 2). Confirm it, or soften it to a
-  feeling.
-- Rows 8 to 12 need upgrading before release.
 - Alternative angles, if the draft does not land: a breakup song with the
   rate limiter, five stages of grief counting down to the reset, or Claude's
   side, apologising cheerfully for the fourth time today.
+
+- **"Twenty one percent" line kept as sung (2026-11-03, user).** Row 2 is
+  reported, secondhand: the GitHub issue relays Reddit reports, and one Pro
+  user wrote first-hand of 21% to 100% over routine tasks. It is the
+  narrator's exaggerated experience, and the kept take sings it.
+- **Release on YouTube and Shorts, TikTok and Reels, and streaming
+  (2026-11-03, user).**
+
+## Release
+
+The checklist from `docs/originality.md`, worked through on 2026-11-03. Not
+legal advice.
+
+| Check | Answer | Source |
+|---|---|---|
+| Engine terms | ACE-Step 1.5 is MIT licensed (model and code) and makes no claim on outputs. Its README asks users to check originality, disclose AI involvement, and get permission before adapting protected material | `LICENSE` and README "License & Disclaimer" in the local ACE-Step checkout |
+| Original lyrics and melody | Yes. No famous song is riffed on here, so `Banned:` is empty. The style prompt names no artist | `song.md` |
+| Trademarks | The title does not say "Claude". The lyrics joke about the product's behaviour, with sourced facts. **The cover art must not use the Claude or Anthropic logo, or look official** | `docs/originality.md` |
+| Real names | "(Fireship)" is an ad-lib nod to the YouTube channel, not a claim about it | user's request, review round 1 |
+| YouTube | AI-generated music that is the main focus of a video must be disclosed with the altered-or-synthetic setting at upload. Disclosure does not limit reach or monetisation | [YouTube Help 14328491](https://support.google.com/youtube/answer/14328491), verified |
+| TikTok and Reels | Turn on the "AI-generated" label at upload. TikTok may add one automatically. Its own help page would not load here | secondary guides only, reported |
+| Streaming | Spotify allows AI music, does not down-rank it, and bans unauthorised voice clones. AI credits are voluntary, through the distributor's DDEX AI fields: fill them in | [Spotify newsroom, 2025-09-25](https://newsroom.spotify.com/2025-09-25/spotify-strengthens-ai-protections/), verified |
+| Distributor | Not chosen. Check its current AI-music rules and AI-credit fields when picking one | open |
 
 ## Facts the jokes can use
 
