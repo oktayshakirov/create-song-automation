@@ -39,6 +39,13 @@ python -m song_automation cover ~/Desktop/songs/night-shift.flac \
 | 0.5 | a recognisable arrangement of the original |
 | 0.8-1.0 | close to the source; use for cleanup, not reinterpretation |
 
+`--song` sends a song file's lyrics (and its style, unless `--style` is
+given), so a cover can re-sing a take with changed lyrics. It does not add
+room: a cover of "Come Back at Five" take 1 at 0.9, with the 16-line verse
+split into two `[Verse]` blocks, kept the beat and length but still dropped
+the missing couplet, lost the spoken bridge and garbled more words than the
+source. Each cover's filename carries its strength and seed.
+
 **On copyright:** the MIT licence covers the model, not the music you feed it.
 Covering your own tracks is fine. Covering a commercial recording produces a
 derivative work of something you do not own, which is a problem the moment you
@@ -68,7 +75,30 @@ length, so a section that was crammed stays crammed. Given the whole song's
 lyrics it also does not know which lines belong in the range: on "Come Back
 at Five" two repaints of a 28-second verse re-sang hook lines inside it and
 garbled the missing couplet. Repaint fixes a bad performance of lines that
-are there. For lines that are missing, re-render with a longer `duration:`.
+are there. A re-render at a longer `duration:` is a different song (see
+Reproducibility), so for a missing line in a take you want to keep, make room
+and splice:
+
+1. Insert a whole number of bars of silence at a gap between two lines
+   (`60 / bpm * 4 * bars` seconds; 4 bars at 140 bpm is 6.857s). Whole bars
+   keep the beat grid on both sides of the insert.
+2. Repaint a **wide** range around it, about 14 seconds, with `--song`
+   pointed at a file holding only the lines that belong in that range.
+3. Transcribe with word timestamps, and splice back only the stretch where
+   the new lines are sung. Both files share one timeline, so cut both at the
+   same instrumental moments with 50ms crossfades
+   (`ffmpeg ... acrossfade=d=0.05`), and the rest stays the source take.
+
+What failed on "Come Back at Five" (2026-11-05), all on a 7-second range over
+the inserted bars: balanced mode over silence sang mumble ("ah, ah, ah");
+`--mode aggressive` gave a bare beat with no vocal; filling the bars with a
+copy of the previous four bars of rap and repainting them gave mumble again.
+A short range will not take specific lines. The wide repaint sang the
+missing couplet clearly on one seed of three, but also dropped or doubled
+the lines around it, which is why only the couplet is spliced back.
+
+`--mode` sets the engine's `repaint_mode`: conservative, balanced (the
+default) or aggressive.
 
 Each repaint's filename carries its seed, so several attempts at one range
 sit side by side.

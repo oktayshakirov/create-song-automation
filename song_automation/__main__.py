@@ -64,7 +64,9 @@ def main(argv=None) -> int:
 
     p_cover = sub.add_parser("cover", help="re-record existing audio in a new style")
     p_cover.add_argument("src")
-    p_cover.add_argument("--style", required=True)
+    p_cover.add_argument("--song", help="song file whose lyrics (and style, "
+                         "unless --style is given) the cover is sung from")
+    p_cover.add_argument("--style")
     p_cover.add_argument("--strength", type=float, default=0.2)
     p_cover.add_argument("--duration", type=float)
     p_cover.add_argument("--seed", type=int)
@@ -77,6 +79,9 @@ def main(argv=None) -> int:
     p_repaint.add_argument("--style")
     p_repaint.add_argument("--from", dest="start", type=float, required=True)
     p_repaint.add_argument("--to", dest="end", type=float, required=True)
+    p_repaint.add_argument("--mode", choices=("conservative", "balanced", "aggressive"),
+                           help="how much of the source the range keeps "
+                           "(engine default: balanced)")
     p_repaint.add_argument("--seed", type=int)
     p_repaint.add_argument("-o", "--out", default=str(DEFAULT_OUT))
 
@@ -101,9 +106,16 @@ def _dispatch(args) -> int:
     if args.command == "render":
         return _render(args)
     if args.command == "cover":
-        take = render_cover(Path(args.src), args.style, Path(args.out),
+        song = parse_song(args.song) if args.song else None
+        style = args.style or (song.style if song else None)
+        if not style:
+            print("error: cover needs --style, or --song to take it from",
+                  file=sys.stderr)
+            return 1
+        take = render_cover(Path(args.src), style, Path(args.out),
                             strength=args.strength, duration=args.duration,
-                            seed=args.seed, report=print)
+                            seed=args.seed, report=print,
+                            lyrics=song.lyrics if song else None)
         print(f"\n{take.path}")
         return 0
     if args.command == "repaint":
@@ -115,7 +127,8 @@ def _dispatch(args) -> int:
             return 1
         take = render_repaint(Path(args.src), style, args.start, args.end,
                               Path(args.out), seed=args.seed, report=print,
-                              lyrics=song.lyrics if song else None)
+                              lyrics=song.lyrics if song else None,
+                              mode=args.mode)
         print(f"\n{take.path}")
         return 0
     return 1

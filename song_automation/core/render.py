@@ -95,11 +95,15 @@ def render_cover(
     audio_format: str = "flac",
     engine: Optional[Engine] = None,
     report: Reporter = None,
+    lyrics: Optional[str] = None,
 ) -> Take:
-    """Re-record an existing track in a different style.
+    """Re-record an existing track in a different style, or re-sing it.
 
     ``strength`` is the engine's ``audio_cover_strength``: ~0.2 lets the new
-    style dominate, higher values stay closer to the source.
+    style dominate, higher values stay closer to the source. With ``lyrics``
+    the vocal is sung from them over the source's structure; high strength
+    (0.8-1.0) keeps the beat and melody, which is how a kept take gets a
+    dropped line back without becoming a different song.
     """
     src_audio = Path(src_audio).expanduser().resolve()
     if not src_audio.exists():
@@ -120,6 +124,8 @@ def render_cover(
         payload["seed"] = seed
     if duration is not None:
         payload["audio_duration"] = duration
+    if lyrics is not None:
+        payload["lyrics"] = lyrics
 
     _say(report, f"cover of {src_audio.name} at strength {strength}")
     try:
@@ -128,10 +134,14 @@ def render_cover(
     finally:
         if temporary:
             os.unlink(staged)
-    title = f"{src_audio.stem}-cover"
+    # Seed and strength in the name, so a batch of covers never overwrites.
+    title = f"{src_audio.stem}-cover-{strength:g}-s{result.seed}"
     take = _keep(result, None, out_dir, 0, 1, "cover", payload, title=title)
     _say(report, f"  {take.describe()}")
     return take
+
+
+REPAINT_MODES = ("conservative", "balanced", "aggressive")
 
 
 def render_repaint(
@@ -145,6 +155,7 @@ def render_repaint(
     engine: Optional[Engine] = None,
     report: Reporter = None,
     lyrics: Optional[str] = None,
+    mode: Optional[str] = None,
 ) -> Take:
     """Regenerate one time range of a track, leaving the rest alone.
 
@@ -154,10 +165,17 @@ def render_repaint(
     Pass the song's full lyrics for any range with a vocal in it. Without
     them the model repaints the range with no words to sing, and a dropped
     line comes back as mumble rather than as the line.
+
+    ``mode`` is the engine's ``repaint_mode``: conservative, balanced (the
+    engine default) or aggressive. Balanced keeps part of the source inside
+    the range, so a range over silence comes back as mumble; aggressive
+    regenerates it from scratch.
     """
     src_audio = Path(src_audio).expanduser().resolve()
     if not src_audio.exists():
         raise EngineError(f"no source audio at {src_audio}")
+    if mode is not None and mode not in REPAINT_MODES:
+        raise EngineError(f"repaint mode must be one of {', '.join(REPAINT_MODES)}")
     if end != -1 and end <= start:
         raise EngineError(f"repaint end ({end}) must be after start ({start})")
     engine = engine or Engine()
@@ -180,6 +198,8 @@ def render_repaint(
         payload["seed"] = seed
     if lyrics:
         payload["lyrics"] = lyrics
+    if mode is not None:
+        payload["repaint_mode"] = mode
 
     _say(report, f"repainting {src_audio.name} from {start}s to {end}s")
     try:

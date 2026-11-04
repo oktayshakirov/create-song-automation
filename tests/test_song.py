@@ -237,8 +237,45 @@ def test_repaint_sends_lyrics_and_keeps_each_seed():
                              None, {})
 
     a = render_repaint(src, "trap", 31, 59, work / "out", engine=FakeEngine(),
-                       lyrics="[verse]\nline one\n")
+                       lyrics="[verse]\nline one\n", mode="aggressive")
     b = render_repaint(src, "trap", 31, 59, work / "out", engine=FakeEngine())
     assert sent[0]["lyrics"] == "[verse]\nline one\n"
+    assert "lyrics" not in sent[1]
+    assert sent[0]["repaint_mode"] == "aggressive"
+    assert "repaint_mode" not in sent[1]
+    assert a.path != b.path and a.path.exists() and b.path.exists()
+
+
+def test_cover_sends_lyrics_and_keeps_each_seed():
+    # A cover re-sung from a song file needs the lyrics in the payload, and a
+    # batch of covers at one strength must not overwrite each other.
+    import tempfile
+    from pathlib import Path
+
+    from song_automation.core.client import JobResult
+    from song_automation.core.render import render_cover
+
+    work = Path(tempfile.mkdtemp())
+    src = work / "track.flac"
+    src.write_bytes(b"not really audio")
+    sent = []
+
+    class FakeEngine:
+        def submit(self, payload):
+            sent.append(dict(payload))
+            return "job"
+
+        def poll(self, task_id, on_progress=None):
+            out = work / f"engine-{len(sent)}.flac"
+            out.write_bytes(b"audio")
+            return JobResult("job", str(out), 100 + len(sent), 8.0, None, "",
+                             None, {})
+
+    a = render_cover(src, "trap", work / "out", strength=0.9,
+                     engine=FakeEngine(), lyrics="[verse]\nline one\n")
+    b = render_cover(src, "trap", work / "out", strength=0.9,
+                     engine=FakeEngine())
+    assert sent[0]["lyrics"] == "[verse]\nline one\n"
+    assert sent[0]["audio_cover_strength"] == 0.9
     assert "lyrics" not in sent[1]
     assert a.path != b.path and a.path.exists() and b.path.exists()
