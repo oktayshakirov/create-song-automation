@@ -3,7 +3,7 @@ style: comedy trap played completely straight, dark and hard-hitting, half-time,
 bpm: 140
 time: 4/4
 language: en
-duration: 145
+duration: 115
 seed: 743206035
 ---
 [Intro - spoken word]
