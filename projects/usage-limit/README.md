@@ -5,8 +5,8 @@ in this repo, and the "Claude's Plan" riff that started the idea is a title
 pattern for later, not this song's title.
 
 **Status:** the user approved the lyrics on 2026-11-03, after one round of
-changes. Rendered with ACE-Step 1.5 locally on 2026-11-03; takes 1, 1a and 1b in
-the Takes table are the keepers (pick one for release), and the release checklist is done (see Release).
+changes. Rendered with ACE-Step 1.5 locally on 2026-11-03; take F in the Takes
+table is the final version (take 1 plus a spliced laptop couplet), and the release checklist is done (see Release).
 Left before release: the cover art, back up the FLAC, and tick the AI
 disclosure on each platform at upload. Before
 release, the facts marked snippet or memory in `SOURCES.md` still need
@@ -138,7 +138,9 @@ the input. A repaint reproduces only with its source take, range and seed.
 
 | # | Engine + model | Seed, file | Date | Notes |
 |---|---|---|---|---|
-| 1 | ACE-Step 1.5, DiT `acestep-v15-turbo`, LM `acestep-5Hz-lm-0.6B`, 8 steps | seed 743206035, 115s, B minor (LM's pick, no `key:`), 140 bpm; `~/Desktop/songs/come-back-at-five-take1.flac` (sha256 `b986083e3c6fa934…`) | 2026-11-03 | **Kept, with 1a and 1b (2026-11-04, user: "our best versions, very similar").** Good: clear and easy to understand. Bad: misses the laptop couplet ("cooking my thighs"), which the user wants. |
-| 1a | ACE-Step 1.5, DiT `acestep-v15-turbo`, LM `acestep-5Hz-lm-0.6B`, 8 steps, repaint of take 1, 31.0–59.4s | seed 4075005296; `~/Desktop/songs/come-back-at-five-take1-repaint-31-59-s4075005296.flac` (sha256 `c79e29aa8a893…`) | 2026-11-03 | **Kept.** Take 1 outside the range, verse re-sung inside it. |
-| 1b | ACE-Step 1.5, DiT `acestep-v15-turbo`, LM `acestep-5Hz-lm-0.6B`, 8 steps, repaint of take 1, 31.0–59.4s | seed 2079893891; `~/Desktop/songs/come-back-at-five-take1-repaint-31-59-s2079893891.flac` (sha256 `944fdd18482cc…`) | 2026-11-03 | **Kept.** Same as 1a, another seed. |
+| 1 | ACE-Step 1.5, DiT `acestep-v15-turbo`, LM `acestep-5Hz-lm-0.6B`, 8 steps | seed 743206035, 115s, B minor (LM's pick, no `key:`), 140 bpm; `~/Desktop/songs/come-back-at-five-take1.flac` (sha256 `b986083e3c6fa934…`) | 2026-11-03 | **Source of F; in the Trash since 2026-11-05.** The user called 1, 1a and 1b "our best versions, very similar" (2026-11-04). Good: clear and easy to understand. Bad: misses the laptop couplet ("cooking my thighs"), which the user wants. |
+| 1a | ACE-Step 1.5, DiT `acestep-v15-turbo`, LM `acestep-5Hz-lm-0.6B`, 8 steps, repaint of take 1, 31.0–59.4s | seed 4075005296; `~/Desktop/songs/come-back-at-five-take1-repaint-31-59-s4075005296.flac` (sha256 `c79e29aa8a893…`) | 2026-11-03 | **In the Trash since 2026-11-05, superseded by F.** Take 1 outside the range, verse re-sung inside it. |
+| 1b | ACE-Step 1.5, DiT `acestep-v15-turbo`, LM `acestep-5Hz-lm-0.6B`, 8 steps, repaint of take 1, 31.0–59.4s | seed 2079893891; `~/Desktop/songs/come-back-at-five-take1-repaint-31-59-s2079893891.flac` (sha256 `944fdd18482cc…`) | 2026-11-03 | **In the Trash since 2026-11-05, superseded by F.** Same as 1a, another seed. |
+| 3 | ACE-Step 1.5, DiT `acestep-v15-turbo`, LM `acestep-5Hz-lm-0.6B`, 8 steps, take 1 cover at strength 0.9, verse split into two `[Verse]` blocks | seed 743206035; was `come-back-at-five-take1-cover-0.9-s743206035.flac`, now in the Trash | 2026-11-05 | **Rejected.** Kept the beat and length, but still no laptop couplet, lost the spoken bridge, and more words garbled than take 1. |
+| **F** | ACE-Step 1.5, DiT `acestep-v15-turbo`, LM `acestep-5Hz-lm-0.6B`, 8 steps; take 1 plus a spliced couplet | `~/Desktop/songs/come-back-at-five-final.flac` (sha256 `74ebc66b5dc618fc…`), 121.9s; the recipe is in its `.flac.json` sidecar | 2026-11-05 | **Final, to confirm by ear.** Take 1 with 4 bars inserted at 38.0s, and the laptop couplet from a wide repaint of that stretch (35.0-48.9s, seed 1248222027) spliced in between 37.5s and 44.4s. Every other second is take 1. The transcript has the whole verse in order apart from "It said you're absolutely right, of course, boss", which take 1 never sang. Check the two splice points (37.5s, 44.4s) and "like a jet about to fly", which Whisper hears as "like a Jedi". Takes 1, 1a and 1b went to the Trash on the user's word ("delete all others"). |
 | 2 | ACE-Step 1.5, DiT `acestep-v15-turbo`, LM `acestep-5Hz-lm-0.6B`, 8 steps | seed 743206035, 145s, D minor, 140 bpm; was `come-back-at-five-s743206035-145s.flac` (sha256 `287c6cd14f6e1d7c…`), now in the Trash | 2026-11-03 | **Rejected (2026-11-04, user: "not good").** Same seed as take 1, but the longer duration made it a different song. Has the laptop couplet; drops "Woke up…" and "Ten agents…". |

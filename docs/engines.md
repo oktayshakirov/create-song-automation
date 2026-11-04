@@ -67,9 +67,15 @@ From "Come Back at Five", the first song rendered (2026-11-03):
   (`mlx-whisper` with `whisper-large-v3-turbo`) gives timestamps per line and
   shows dropped, doubled and garbled lines in a minute. It mishears over a
   beat too, so confirm by ear before cutting a take on its word.
-- **A missing line needs a new take.** Repaint keeps the source's length and
-  cannot fit lines back in, and the same seed at a new `duration:` is a
-  different song. The details are in the sibling repo's `docs/tasks.md`.
+- **A missing line can be spliced in, not re-rendered.** The same seed at a
+  new `duration:` is a different song, and the user rejected it. Repaint and
+  cover keep the take's length, so neither fits a line back in. What worked:
+  insert whole bars of silence, repaint a wide range around them with only
+  that range's lines, and splice back just the stretch where the new lines
+  are sung. The recipe is in the sibling repo's `docs/tasks.md`.
+- **Keep every take you might return to until a final exists.** The user's
+  favourite turned out to be the first take, after a later one had replaced
+  it in the Takes table.
 - **Untested idea for the next song:** split a 16-line verse into two
   8-line `[Verse]` blocks, and see whether shorter sections stop the drops.
 
