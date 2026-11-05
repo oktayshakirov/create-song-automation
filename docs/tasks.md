@@ -88,6 +88,12 @@ and splice:
    the new lines are sung. Both files share one timeline, so cut both at the
    same instrumental moments with 50ms crossfades
    (`ffmpeg ... acrossfade=d=0.05`), and the rest stays the source take.
+   Never cut inside the inserted bars: the source is silent there, and on
+   "Come Back at Five" a splice 0.46s inside them left 0.4s of digital
+   silence under the whole mix, which the user heard as two parts glued
+   together. Check each splice point with a level scan in 50ms steps:
+   any -180 dB frame is a hole. The repaint comes back sample-aligned with
+   its source, but a few ms short at the end, so pad it before mixing.
 
 What failed on "Come Back at Five" (2026-11-05), all on a 7-second range over
 the inserted bars: balanced mode over silence sang mumble ("ah, ah, ah");
