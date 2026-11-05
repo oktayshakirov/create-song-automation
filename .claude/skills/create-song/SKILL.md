@@ -1,6 +1,6 @@
 ---
 name: create-song
-description: Make a funny, catchy AI song about a trending topic - research what is trending, suggest topics, write a brief with sourced facts, pick an angle, write the hook first, then the verses, check the lyric sheet and export it for a music engine. Use when the user runs /create-song, asks for a song, parody, rap or trap track, lyrics or a hook, or wants to continue a song in projects/. Rendering audio is not built yet.
+description: Make a funny, catchy AI song about a trending topic - research what is trending, suggest topics, write a brief with sourced facts, pick an angle, write the hook first, then the verses, check the lyric sheet and export it for a music engine (rendered locally with ACE-Step in the sibling song-automation repo). Use when the user runs /create-song, asks for a song, parody, rap or trap track, lyrics or a hook, or wants to continue a song in projects/.
 ---
 
 # Create a song
@@ -45,7 +45,8 @@ user.
 6. **Check until clean.** `check` with zero errors. Read each warning back to
    the user if you keep it.
 7. **Export** when the user is happy with the lyrics. Do not build or run a
-   renderer unless the user asks: the engine is undecided.
+   renderer here unless the user asks. The engine is ACE-Step,
+   driven from the sibling repo (see `docs/engines.md`).
 8. **Update the project README.** Update the Status line, the decisions made
    with a one-line reason each, and anything still open.
 9. **Commit** the project folder, with lessons in the narrowest doc.
