@@ -103,6 +103,17 @@ A short range will not take specific lines. The wide repaint sang the
 missing couplet clearly on one seed of three, but also dropped or doubled
 the lines around it, which is why only the couplet is spliced back.
 
+**A few missing words: generate the phrase and lay its vocal in** (2026-11-07).
+"about to fly" was never sung on "Come Back at Five", and four repaints of
+the verse (38.4-48.9s, the line's own lyrics) came back as mumble. What
+worked in ten minutes: a 14-second text2music take of just that line,
+repeated, with the song's style, `bpm:` and `key:` pinned; Whisper to find
+the take that sings the words (1 of 4); demucs for its vocal; that phrase
+laid into the master's gap, timed off the previous word's onset so it lands
+on the beat, level-matched to the song's vocal on the same line and then
+**+4 dB** - at a plain match Whisper could not hear it over the beat
+without a prompt.
+
 `--mode` sets the engine's `repaint_mode`: conservative, balanced (the
 default) or aggressive.
 
