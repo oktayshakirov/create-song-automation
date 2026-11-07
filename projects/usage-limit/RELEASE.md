@@ -20,7 +20,10 @@ Keep "(AI)", "Claude" and any feature tags out of the title field.
 
 ## YouTube - long (16:9)
 
-**Title:** Come Back at Five 🕔 The Claude Usage Limit Song
+**Title:** When Claude says come back at 5 😭 | Come Back at Five (Full Song)
+
+The Short's joke, plus the release name so the video and the streaming track
+meet in search (the user preferred the Short's style, 2026-11-07).
 
 **Thumbnail:** `thumb-long.jpg`
 
