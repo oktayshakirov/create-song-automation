@@ -7,7 +7,8 @@ pattern for later, not this song's title.
 **Status:** the user approved the lyrics on 2026-11-03, after one round of
 changes. Rendered with ACE-Step 1.5 locally on 2026-11-03; take F in the Takes
 table is the final version (take 1 plus a spliced laptop couplet), and the release checklist is done (see Release).
-Left before release: the cover art, back up the FLAC, and tick the AI
+Distributor: DistroKid (the user, 2026-11-07). Cover, thumbnails and the
+upload copy are done (`RELEASE.md`). Left: back up the FLAC, and tick the AI
 disclosure on each platform at upload. Before
 release, the facts marked snippet or memory in `SOURCES.md` still need
 checking. The user delegated the angle and hook choice for the first draft.
@@ -120,7 +121,7 @@ legal advice.
 | YouTube | AI-generated music that is the main focus of a video must be disclosed with the altered-or-synthetic setting at upload. Disclosure does not limit reach or monetisation | [YouTube Help 14328491](https://support.google.com/youtube/answer/14328491), verified |
 | TikTok and Reels | Turn on the "AI-generated" label at upload. TikTok may add one automatically. Its own help page would not load here | secondary guides only, reported |
 | Streaming | Spotify allows AI music, does not down-rank it, and bans unauthorised voice clones. AI credits are voluntary, through the distributor's DDEX AI fields: fill them in | [Spotify newsroom, 2025-09-25](https://newsroom.spotify.com/2025-09-25/spotify-strengthens-ai-protections/), verified |
-| Distributor | Not chosen. Check its current AI-music rules and AI-credit fields when picking one | open |
+| Distributor | DistroKid (the user, 2026-11-07). Its current AI-music rules and AI-credit fields were not checked here: answer its AI questions truthfully in the upload form | user, at upload |
 
 ## Facts the jokes can use
 
