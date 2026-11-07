@@ -62,8 +62,8 @@ python -m song_automation engine status         # up? weights resident? which ta
 python -m song_automation new "Night Shift"
 python -m song_automation plan   projects/night-shift.md
 python -m song_automation render projects/night-shift.md -o ~/Desktop/songs
-python -m song_automation cover   <audio> --style "..." --strength 0.2
-python -m song_automation repaint <audio> --from 18 --to 26 --style "..."
+python -m song_automation cover   <audio> --style "..." --strength 0.2   # --song FILE re-sings it
+python -m song_automation repaint <audio> --from 18 --to 26 --song FILE   # --mode conservative|balanced|aggressive
 python -m song_automation engine stop           # frees ~8GB
 ```
 
@@ -114,6 +114,42 @@ seconds a lyric line the vocal rushes and garbles. When unsure, go longer.
 **Cover and repaint report no metadata.** They return `"N/A"` for duration,
 bpm and key. The pipeline reads duration back with ffprobe; do not quote the
 engine's numbers for those tasks.
+
+## What the first full song taught (Come Back at Five, 2026-11)
+
+**Transcribe every take before calling it good.** A 16-line verse lost two
+to four lines in every render. `mlx-whisper` (large-v3-turbo) is installed in
+this repo's `.venv`; a pass shows dropped, doubled and garbled lines in a
+minute. Demucs (vocal separation) lives in
+`~/.local/share/song-automation/sepvenv`. **Never keep tools or work files
+in the session scratchpad** - it is wiped between days and took a build
+script with it.
+
+**Keep every take until the user names the final.** Their favourite was the
+first take, after a later render had been logged as the keeper and the first
+had gone to the Trash.
+
+**Change one input and you have a new song.** Same seed at 115s, 130s and
+145s gave three songs in three keys. Pin `key:` once a take is liked, then
+fix it in place rather than re-rendering.
+
+**Fixing in place, by size of fault** (recipes in `docs/tasks.md`):
+
+| Fault | Fix |
+|---|---|
+| a present line sung badly | `repaint` that range with `--song` |
+| a whole line missing | insert whole bars of silence, repaint ~14s around them with only that range's lines, splice back just the new line |
+| a few words missing | render the line alone as a short text2music take (same style, bpm, key), demucs its vocal, lay the words into the gap, +4 dB over a level match |
+| an ad-lib to replace | splice from a clean stretch, or synthesise a short effect |
+
+Short repaints (under ~10s) of specific words fail: balanced over silence
+mumbles, aggressive gives a bare beat. Splice at instrumental moments, never
+inside inserted silence, and scan each splice point's level for a hole.
+
+**After the song:** the music video is built in `~/Coding/video-edit-automation`
+(`projects/song/<slug>/`, `docs/video/projects/song.md`), and the release copy
+and cover in the lyric repo (`create-song-automation`, the project's
+`RELEASE.md`).
 
 ## Auditioning with the user
 
