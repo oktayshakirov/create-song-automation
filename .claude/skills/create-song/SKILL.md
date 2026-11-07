@@ -47,9 +47,26 @@ user.
 7. **Export** when the user is happy with the lyrics. Do not build or run a
    renderer here unless the user asks. The engine is ACE-Step,
    driven from the sibling repo (see `docs/engines.md`).
-8. **Update the project README.** Update the Status line, the decisions made
-   with a one-line reason each, and anything still open.
-9. **Commit** the project folder, with lessons in the narrowest doc.
+8. **Render** in the sibling repo with its `/create-song` skill (song-automation):
+   transcribe every take, keep every take until the user names the final,
+   and fix faults in place rather than re-rolling. Log each kept take in the
+   Takes table with seed, file, sha256 and what is good or bad.
+9. **Music video**, once the master is approved: karaoke video in
+   `~/Coding/video-edit-automation/projects/song/<slug>/` - copy
+   `timing.py`, `video.py` and `art.py` from `come-back-at-five`, and read
+   `docs/video/projects/song.md` there. Ask the four look questions only if
+   this song differs (neutral look, no logo, drawn parody UI, whole song at
+   9:16 were the first song's answers).
+10. **Release kit** in the project's `RELEASE.md` (copy `usage-limit`'s):
+    the distributor fields (DistroKid; title only, no "(AI)" or brand
+    names), the 3000x3000 cover (title as its only text, no emoji, no logo),
+    YouTube long and Short titles and descriptions with the sung lyrics, and
+    a TikTok caption with no hashtags. The user preferred the Short's
+    joke-first title style for the long one too, with the song's name after
+    a `|` so video and track meet in search.
+11. **Update the project README.** Update the Status line, the decisions made
+    with a one-line reason each, and anything still open.
+12. **Commit** the project folder, with lessons in the narrowest doc.
 
 ## Hard rules
 
