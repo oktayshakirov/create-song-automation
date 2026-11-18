@@ -53,10 +53,17 @@ user.
    Takes table with seed, file, sha256 and what is good or bad.
 9. **Music video**, once the master is approved: karaoke video in
    `~/Coding/video-edit-automation/projects/song/<slug>/` - copy
-   `timing.py`, `video.py` and `art.py` from `come-back-at-five`, and read
-   `docs/video/projects/song.md` there. Ask the four look questions only if
-   this song differs (neutral look, no logo, drawn parody UI, whole song at
-   9:16 were the first song's answers).
+   `timing.py`, `video.py` and `art.py` from the newest song there
+   (`gta-flu`), and read `docs/video/projects/song.md` there. Ask the look
+   questions only if this song differs (no watermark, whole song at 9:16,
+   plain SF Pro karaoke, speaker tags on dialogue, real subject images via
+   cutouts are the standing answers).
+   **Nothing on screen for less than a second.** Every sticker, label,
+   stamp, emoji, card or bubble must hold `MIN_HOLD` (1.0s) before its
+   scene or line changes: a punchline prop is pulled earlier (`at()`), an
+   ad-lib that cannot hold, or that the next line sings, is not shown
+   (`shows()`). Run `video.py long --audit` and `short --audit` before every
+   full render and read what it hid; re-time anything that matters.
 10. **Release kit** in the project's `RELEASE.md` (copy `usage-limit`'s):
     the distributor fields (DistroKid; title only, no "(AI)" or brand
     names), the 3000x3000 cover (title as its only text, no emoji, no logo),
