@@ -1,5 +1,12 @@
-# Both the lyric tools and the ACE-Step client are standard library only.
+# The lyric tools and the ACE-Step client are standard library only.
 # The engine (ACE-Step 1.5) brings its own venv, see docs/engine.md.
 #
+# The zen tools (zen/) need these; mlx-whisper (take transcription) is
+# installed in the same .venv, see the create-song skill.
+numpy
+scipy
+soundfile
+pillow
+
 # For the tests:
 pytest>=8.0

@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.2.0
+
+2026-11-18: one repo for songs and zen albums.
+
+- Merged the local-only `song-automation` repo in, with its history: the
+  ACE-Step client (`engine`, `new`, `plan`, `render`, `cover`, `repaint`),
+  its docs (`engine`, `prompting`, `lyrics`, `tasks`) and tests. One CLI now
+  covers the lyric sheet and the render file. Render files
+  (`projects/<slug>.md`) stay git-ignored.
+- `/create-song` is one skill: write, check, render, fix, video, release.
+- `/create-zen` and `zen/`: sound-therapy albums for tinnitushelp.me.
+  `zen.noise` (white, pink, brown, green and grey beds, notch, tilt, slow
+  drift, band energy), `zen.album` (previews, -18 LUFS masters under a
+  -1.5 dBFS peak ceiling, measurements), `zen.cover` (the tinnitushelp.me
+  bar, matched to an existing cover, and the 1200x800 site image),
+  `zen.catalogue`. First album spec: `zen/albums/colors_of_calm.py`.
+  Rules and backlog in `docs/zen.md`.
+
 ## 0.1.0
 
 Repo scaffolded on 2026-11-02, before the first song.

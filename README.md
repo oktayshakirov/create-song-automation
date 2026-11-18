@@ -90,6 +90,23 @@ python -m song_automation repaint track.flac --from 18 --to 26 --style "sparse b
 In Claude Code, `/create-song` runs the whole workflow, and `/create-zen`
 builds a sound album.
 
+## Zen albums
+
+Sound-therapy albums for [tinnitushelp.me/zen](https://www.tinnitushelp.me/zen),
+released through DistroKid. Beds are generated, not recorded, so every
+track's spectrum is a measured fact the album page can print.
+
+```bash
+.venv/bin/python -m zen.catalogue --store                         # what is on /zen
+.venv/bin/python -m zen.album zen/albums/colors_of_calm.py --preview   # 2-min MP3s
+.venv/bin/python -m zen.album zen/albums/colors_of_calm.py --final     # 10-min WAVs
+.venv/bin/python -m zen.cover zen/albums/colors_of_calm.py             # cover + site image
+```
+
+Masters land at -18 LUFS under a -1.5 dBFS peak ceiling, 44.1 kHz 16-bit.
+The rules, the catalogue and the backlog are in [`docs/zen.md`](docs/zen.md);
+`/create-zen` runs the whole thing.
+
 ## Lyric sheet format
 
 ```
