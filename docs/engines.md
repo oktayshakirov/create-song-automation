@@ -1,10 +1,11 @@
 # Engines
 
 **Decided 2026-11-03: ACE-Step 1.5, local.** The user renders on their own
-machine with the sibling repo `~/Coding/song-automation` (local only, no
-remote), which drives a local ACE-Step server. This repo still does not render. It writes
-the sheet, and `export` produces the Suno-shaped text that the ACE-Step song
-file is translated from (see below).
+machine with this repo's ACE-Step client (`render`, `cover`, `repaint`),
+which drives a local ACE-Step server. Until 2026-11-18 that client lived in a
+separate local repo, `song-automation`; it is merged in here now. The lyric
+sheet is written first, and `export` produces the Suno-shaped text that the
+ACE-Step render file is translated from (see below).
 
 ## The user's setup
 
@@ -16,11 +17,12 @@ file is translated from (see below).
 | Steps | 8 (turbo is tuned for 8) |
 | Output | FLAC, written to `~/Desktop/songs/` with a JSON sidecar per take |
 | Render time | about 2x the track length, plus ~8s of LM time |
-| Driver | `python -m song_automation render <file> -o ~/Desktop/songs` from the sibling repo |
+| Driver | `python -m song_automation render projects/<slug>.md -o ~/Desktop/songs` |
 
-The song file goes in the sibling repo's `projects/<slug>.md`, which is
-git-ignored there. Rendering details, the engine lifecycle and the prompting
-rules are in that repo's `docs/`. They are not repeated here.
+The render file goes in `projects/<slug>.md`, which is git-ignored.
+Rendering details, the engine lifecycle and the prompting rules are in
+`docs/engine.md`, `docs/tasks.md`, `docs/prompting.md` and `docs/lyrics.md`.
+They are not repeated here.
 
 **Takes are reproducible by seed.** Unlike Suno, the same song file, seed and
 model give the same take, and the sidecar records the seed. Log the seed, not
@@ -72,7 +74,7 @@ From "Come Back at Five", the first song rendered (2026-11-03):
   cover keep the take's length, so neither fits a line back in. What worked:
   insert whole bars of silence, repaint a wide range around them with only
   that range's lines, and splice back just the stretch where the new lines
-  are sung. The recipe is in the sibling repo's `docs/tasks.md`.
+  are sung. The recipe is in `docs/tasks.md`.
 - **Keep every take you might return to until a final exists.** The user's
   favourite turned out to be the first take, after a later one had replaced
   it in the Takes table.

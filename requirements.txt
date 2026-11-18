@@ -1,2 +1,5 @@
-# The engine is standard library only. This is for the tests.
-pytest>=8
+# Both the lyric tools and the ACE-Step client are standard library only.
+# The engine (ACE-Step 1.5) brings its own venv, see docs/engine.md.
+#
+# For the tests:
+pytest>=8.0

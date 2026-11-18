@@ -66,8 +66,8 @@ The checker cannot hear.
 python -m song_automation export projects/<slug>/song.md
 ```
 
-Rendering is not built here. Translate `out/<slug>/suno.txt` into an
-ACE-Step song file in the sibling `song-automation` repo and render it there.
+Translate `out/<slug>/suno.txt` into an
+ACE-Step render file, `projects/<slug>.md`, and render it here.
 `engines.md` lists what changes in the translation: ACE-Step's limits are
 tighter than the ones `check` assumes.
 

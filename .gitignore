@@ -14,5 +14,11 @@ out/
 *.m4a
 *.flac
 
+# Render files (`projects/<slug>.md`, the ACE-Step song format) stay local:
+# they hold unreleased lyrics. A released song's folder, `projects/<slug>/`,
+# is committed. `examples/night-shift.md` is the committed render reference.
+projects/*.md
+!projects/README.md
+
 # Working notes.
 HANDOFF.md
