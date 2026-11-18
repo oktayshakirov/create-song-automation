@@ -150,6 +150,9 @@ inside inserted silence, and scan each splice point's level for a hole.
 (`projects/song/<slug>/`, `docs/video/projects/song.md`), and the release copy
 and cover in the lyric repo (`create-song-automation`, the project's
 `RELEASE.md`).
+In the video, nothing pops on screen for less than a second: copy the newest
+song's `video.py` (it carries the `MIN_HOLD` guard) and run its `--audit`
+before every full render.
 
 ## Auditioning with the user
 
