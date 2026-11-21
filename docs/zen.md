@@ -39,7 +39,7 @@ from page names, so search a platform for the store title.
 | `/zen/evening-sounds` | Background Blur | lo-fi, fan, fire with rain, brown noise with pads |
 | `/zen/quiet-universe` | Quiet Universe | space ambience |
 | `/zen/jungle-stillness` | Jungle Stillness | jungle ambience |
-| `/zen/noise-colors` (pending store approval) | Colors of Calm | white, pink, grey, green, brown, sleep brown, all drifting |
+| `/zen/noise-colors` | Colors of Calm | white, pink, grey, green, brown, sleep brown, all drifting (live 2026-11-21) |
 
 **The source files of the older albums are gone from disk.** Recorded sounds
 cannot be re-cut; anything new is generated (`zen/noise.py`) or comes from a
@@ -181,7 +181,19 @@ Only once the user has the store links. In `~/Coding/tinnitus-blog`:
   and a closing `<Blockquote>`. Internal links bold with `/blog/` and `/zen/`
   prefixes.
 - The image is already at `public/images/<SITE_SLUG>.jpg`.
-- `npm run build` must pass. Then show the user the page on `npm run start`.
+- `yarn build` must pass (the site is a static export on Cloudflare
+  Workers). Then check the page on the dev server (`npm run start`).
+- **Publish the measured band table on the page** (Colors of Calm, the
+  first page to do it, 2026-11-21): one row per track, the five bands as
+  rounded percentages, plus a "which one for your tinnitus" list that reads
+  straight off it. Check every claim in the copy against the numbers before
+  commit: the first draft said two tracks were the "only" ones above 4 kHz
+  when a third had 22% there.
+- A six-column table is fine on a phone: the page wraps tables in a
+  horizontally scrolling box, and the page itself does not scroll sideways
+  (checked at 375 px).
+- The view counter 404s on the dev server (`/api/views/...`); it only
+  exists in the production Worker.
 - **A push to `main` there is a production deploy** and fires a social
   notification. Commit and push only when the user says so, and never with
   AI attribution.

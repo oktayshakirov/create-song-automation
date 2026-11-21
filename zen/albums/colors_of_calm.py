@@ -1,4 +1,5 @@
-"""Colors of Calm - six noise colours, bright to dark. Released 2026-11.
+"""Colors of Calm - six noise colours, bright to dark. Released 2026-11,
+live at https://www.tinnitushelp.me/zen/noise-colors since 2026-11-21.
 
 The first album made with /create-zen. The /zen catalogue had one noise album
 (White Noise Therapy) and no pink, grey, green or brown at all, while the
