@@ -40,7 +40,7 @@ from page names, so search a platform for the store title.
 | `/zen/quiet-universe` | Quiet Universe | space ambience |
 | `/zen/jungle-stillness` | Jungle Stillness | jungle ambience |
 | `/zen/noise-colors` | Colors of Calm | white, pink, grey, green, brown, sleep brown, all drifting (live 2026-11-21) |
-| `/zen/breathing-chimes` (planned) | Breath and Bell | six breathing patterns marked by chimes over pink (1-4) and brown (5-6); finals and cover done 2026-11-22, waiting on DistroKid |
+| `/zen/breathing-chimes` (planned) | Breath and Bell | six breathing patterns marked by chimes over pink (1-4) and brown (5-6); uploaded to DistroKid 2026-11-22; page when the store links come |
 
 **The source files of the older albums are gone from disk.** Recorded sounds
 cannot be re-cut; anything new is generated (`zen/noise.py`) or comes from a
