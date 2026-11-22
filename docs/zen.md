@@ -115,10 +115,11 @@ starts, holds silent. A spec adds it as `Track(..., chimes=Chimes(...))`;
   guide to breathe to. 5 s of bed first, then whole breaths only, the last
   strike ringing out before the fade, so a 10-minute track holds fewer
   breaths than 600 / period (4-7-8: 30, box: 36).
-- **Brown beds leave more peak headroom used**: chimes over brown peaked at
-  -2.0 dBFS against -5 over pink, since brown's RMS sits closer to its
-  peak after the 25 Hz highpass. Still under the -1.5 ceiling; a louder
-  chime over brown may hit it and stop short of -18 LUFS.
+- **Chimes over brown peak higher**: -2.0 dBFS against about -5 over pink.
+  The chime is set against the bed's RMS, and LUFS weighs brown's low end
+  lightly, so mastering lifts a brown track (and its chimes) more to reach
+  -18. Still under the -1.5 ceiling; a louder chime over brown may hit it
+  and stop short of -18 LUFS.
 
 ## Mastering
 
