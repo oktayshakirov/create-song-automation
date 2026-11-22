@@ -149,7 +149,10 @@ hand. Delete the previews once the choice is made.
 
 **Existing covers:** a full-bleed picture (a bird, a cat, fire, a jungle, an
 astronaut, a marble swirl, clouds), mostly photographic, **no title or text on
-the picture**, and the promo bar on top.
+the picture**. Up to Colors of Calm they also carried a black
+`www.tinnitushelp.me` bar on top. **No bar from Breath and Bell on
+(2026-11-22):** stores reject artwork with a URL and the last album was
+rejected for it. Nothing but the picture goes on a cover.
 
 **The user generates the image in ChatGPT.** Write them a prompt that:
 
@@ -158,8 +161,8 @@ the picture**, and the promo bar on top.
   horizon to dark in front);
 - asks for a **square 1:1** image, photographic, calm, soft light, no harsh
   contrast and no neon;
-- keeps the important detail in the **middle 60%** of the height and the
-  **top 8% plain**, because the bar covers it;
+- keeps the important detail in the **middle 60%** of the height, so the
+  site's 16:9 and 4:3 crops keep it;
 - says **no text, letters, numbers, logos, watermarks, people, faces or
   ears** (no ear close-ups is a standing rule on this brand);
 - offers two directions (one abstract, one photographic) so they can pick;
@@ -176,20 +179,15 @@ to 3:2, which works when the subject sits mid-height as the prompt asks. `python
 
 | file | size | for |
 |---|---|---|
-| `~/Desktop/<SLUG>/cover/<SLUG>-cover-3000.jpg` | 3000x3000, bar, q95 | DistroKid |
-| `~/Coding/tinnitus-blog/public/images/<SITE_SLUG>.jpg` | 1200x800, no bar, q80, ~75 KB | the /zen page (shown 16:9 and 4:3 with object-fit cover, and as the share image) |
-
-**The bar**, measured off the Jungle Stillness cover and checked against it
-at 800 px (glyph starts within 1 px): black, 5.25% of the height,
-`www.tinnitushelp.me` in Courier New regular, grey 214, spanning 73.5% of the
-width, centred. No stroke: the reference's ink is 2031 px at 800, no stroke
-gives 1958, stroke 1 gives 2526.
+| `~/Desktop/<SLUG>/cover/<SLUG>-cover-3000.jpg` | 3000x3000, q95, no text | DistroKid |
+| `~/Coding/tinnitus-blog/public/images/<SITE_SLUG>.jpg` | 1200x800, q80, ~75 KB | the /zen page (shown 16:9 and 4:3 with object-fit cover, and as the share image) |
 
 ## DistroKid
 
 The user uploads; never upload for them.
 
-- The six (or so) WAVs plus the 3000 cover. Track titles exactly as in the
+- The six (or so) WAVs plus the 3000 cover (no URL or any text on it:
+  stores reject that). Track titles exactly as in the
   spec. Same artist name as the earlier albums (ask if unknown).
 - Genre ambient or new age. Instrumental.
 - **YouTube Content ID off.** Our own session videos use these beds, and

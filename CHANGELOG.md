@@ -10,6 +10,8 @@
   chime tracks report whole breaths and the bed's own bands.
 - `zen.cover` falls back to a 3:2 crop of the square when there is no
   landscape image.
+- `zen.cover` no longer adds the `www.tinnitushelp.me` bar: stores reject
+  artwork with a URL. The cover is the picture alone.
 - `zen.catalogue` no longer counts a page's tracks twice when it carries a
   band table.
 - Album spec: `zen/albums/breath_and_bell.py`.

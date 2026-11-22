@@ -1,6 +1,6 @@
 ---
 name: create-zen
-description: Make a new sound-therapy album for tinnitushelp.me /zen - review the existing albums, offer what is missing and what could be added, pick the album with the user, generate and master the tracks (noise colours, notched noise, chimes), audition 2-minute previews, render the DistroKid WAVs, write a ChatGPT cover prompt, add the tinnitushelp.me promo bar and the site image, and once DistroKid approves, add the /zen page. Use when the user runs /create-zen, asks for a new zen album, sound album, noise album, white/pink/brown noise tracks, notched tracks or sound therapy for DistroKid, asks what albums are missing from /zen, or wants an album's cover or /zen page done. For session videos use video-tinnitus; for songs use create-song.
+description: Make a new sound-therapy album for tinnitushelp.me /zen - review the existing albums, offer what is missing and what could be added, pick the album with the user, generate and master the tracks (noise colours, notched noise, chimes), audition 2-minute previews, render the DistroKid WAVs, write a ChatGPT cover prompt, build the 3000 cover (picture only, no text) and the site image, and once DistroKid approves, add the /zen page. Use when the user runs /create-zen, asks for a new zen album, sound album, noise album, white/pink/brown noise tracks, notched tracks or sound therapy for DistroKid, asks what albums are missing from /zen, or wants an album's cover or /zen page done. For session videos use video-tinnitus; for songs use create-song.
 ---
 
 # Create a zen album
@@ -61,8 +61,8 @@ from memory of it.
 - **No relief promises, no invented facts.** Health audience. Describe
   what a track measured, never what it will do for someone.
 - **No long dashes and no curly quotes** in any title, description or page.
-- **No ear close-ups and no text on the cover picture.** The bar is the only
-  text.
+- **No ear close-ups and no text on the cover.** No tinnitushelp.me bar,
+  URL or title: stores reject artwork with a URL (dropped 2026-11-22).
 - **Never upload to DistroKid or push the site** for the user.
 - **Never commit audio.** WAVs and MP3s are git-ignored; finals live in
   `~/Desktop/<SLUG>/final/`.
