@@ -61,7 +61,7 @@ def main() -> None:
     a = ap.parse_args()
     spec = load_spec(a.spec)
     d = Path(f"~/Desktop/{spec.SLUG}/cover").expanduser()
-    src = lambda stem: next(p for p in d.iterdir() if p.stem == stem)
+    src = lambda stem: next((p for p in d.iterdir() if p.stem == stem), None)
 
     sq = Image.open(src("square")).convert("RGB")
     if sq.width != sq.height:
@@ -71,7 +71,12 @@ def main() -> None:
     cover.save(out, quality=95, subsampling=0)
     print(out)
 
-    ls = Image.open(src("landscape")).convert("RGB")
+    # No landscape (Breath and Bell, 2026-11-22: only the square came back):
+    # centre-crop the square to 3:2. Fine when the subject sits mid-height,
+    # as the prompt asks; the ChatGPT extension keeps more of the scene.
+    if src("landscape") is None:
+        print("no landscape: cropping the square to 3:2 for the site image")
+    ls = Image.open(src("landscape") or src("square")).convert("RGB")
     w, h = ls.size
     if abs(w / h - 1.5) > 0.01:            # centre-crop to 3:2
         nw, nh = (round(h * 1.5), h) if w / h > 1.5 else (w, round(w / 1.5))

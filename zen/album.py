@@ -4,7 +4,9 @@
     .venv/bin/python -m zen.album zen/albums/colors_of_calm.py --final
 
 A spec is a small Python file with TITLE, SLUG and TRACKS, a list of
-`Track(n, title, bed, seed)` (see `zen/albums/colors_of_calm.py`). Output goes
+`Track(n, title, bed, seed)` (see `zen/albums/colors_of_calm.py`), plus an
+optional `chimes=Chimes(...)` that strikes a breathing pattern over the bed
+(`zen/chime.py`, `zen/albums/breath_and_bell.py`). Output goes
 to `~/Desktop/<SLUG>/previews` (2-minute MP3s, the audition) or `/final`
 (10-minute 44.1 kHz 16-bit WAVs, the DistroKid upload), each with a
 `measurements.json`.
@@ -28,6 +30,7 @@ from pathlib import Path
 import numpy as np
 import soundfile as sf
 
+from zen.chime import Chimes, mix
 from zen.noise import SR, Bed, band_energy, render
 
 TARGET_LUFS = -18.0
@@ -40,6 +43,19 @@ class Track:
     title: str
     bed: Bed
     seed: int
+    chimes: Chimes | None = None
+
+
+def build(t: Track, dur: float) -> tuple[np.ndarray, dict]:
+    """The track's audio and what to report about it beyond the mastering:
+    for a chime track, the bed's own bands (so the copy can say what the
+    chimes add) and the number of whole breaths."""
+    x = render(dur, t.bed, t.seed)
+    if t.chimes is None:
+        return x, {}
+    bed_bands = band_energy(x[int(min(30, dur / 4) * SR):])
+    x, breaths = mix(x, t.chimes, t.seed)
+    return x, {"breaths": breaths, "bed": bed_bands}
 
 
 def load_spec(path: Path):
@@ -93,17 +109,23 @@ def main() -> None:
     root = Path(f"~/Desktop/{spec.SLUG}").expanduser() / ("previews" if a.preview else "final")
     dur = 120.0 if a.preview else a.minutes * 60
     ext = "mp3" if a.preview else "wav"
-    rows = [master(render(dur, t.bed, t.seed), root / f"{t.n:02d} {t.title}.{ext}", a.preview)
-            for t in spec.TRACKS]
+    rows = []
+    for t in spec.TRACKS:
+        x, extra = build(t, dur)
+        rows.append({**master(x, root / f"{t.n:02d} {t.title}.{ext}", a.preview), **extra})
 
     for v in a.variant if a.preview else []:
         n, kv = v.split(":", 1)
         field, value = kv.split("=", 1)
         t = next(t for t in spec.TRACKS if t.n == int(n))
-        cur = getattr(t.bed, field)
-        bed = replace(t.bed, **{field: type(cur)(value) if cur is not None else float(value)})
-        rows.append(master(render(dur, bed, t.seed),
-                           root / f"{t.n:02d} {t.title} ({field} {value}).mp3", True))
+        # A field name is looked up on the bed first, then on the chimes.
+        part = "bed" if hasattr(t.bed, field) else "chimes"
+        obj = getattr(t, part)
+        cur = getattr(obj, field)
+        obj = replace(obj, **{field: type(cur)(value) if cur is not None else float(value)})
+        x, extra = build(replace(t, **{part: obj}), dur)
+        rows.append({**master(x, root / f"{t.n:02d} {t.title} ({field} {value}).mp3", True),
+                     **extra})
 
     print(json.dumps(rows, indent=1))
     (root / "measurements.json").write_text(json.dumps(rows, indent=1))

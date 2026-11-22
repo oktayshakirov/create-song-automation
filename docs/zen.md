@@ -40,6 +40,7 @@ from page names, so search a platform for the store title.
 | `/zen/quiet-universe` | Quiet Universe | space ambience |
 | `/zen/jungle-stillness` | Jungle Stillness | jungle ambience |
 | `/zen/noise-colors` | Colors of Calm | white, pink, grey, green, brown, sleep brown, all drifting (live 2026-11-21) |
+| `/zen/breathing-chimes` (planned) | Breath and Bell | six breathing patterns marked by chimes over pink (1-4) and brown (5-6); finals and cover done 2026-11-22, waiting on DistroKid |
 
 **The source files of the older albums are gone from disk.** Recorded sounds
 cannot be re-cut; anything new is generated (`zen/noise.py`) or comes from a
@@ -53,8 +54,9 @@ done when its album ships.
 | idea | what | needs | status |
 |---|---|---|---|
 | Noise colours | pink, brown, green, grey, soft white, sleep brown | nothing | **done: Colors of Calm, 2026-11** |
-| Breathing with chimes | noise bed, soft high chime on each inhale, lower one on each exhale, silence on holds. One track per pattern the video sessions use: 4-7-8, box 4-4-4-4, 6-6-6-6, 2:1, coherent 6-6, triangle, physiological sigh | a chime synth in `zen/` | open, recommended next: it pairs with the session videos and builds the synth the next two reuse |
-| Starlight accents | white or pink noise with sparse, quiet high melodic accents (music box, glass, celesta) at irregular 20-60 s gaps, so nothing sounds looped. Closest to the user's "white noise with little high-pitched melodies" | the chime synth | open |
+| Breathing with chimes | noise bed, soft high chime on each inhale, lower one on each exhale, silence on holds. 5-5, 6-6, 4-4-4, 4-4-4-4, 4-8, 4-7-8 | `zen/chime.py` (built 2026-11-22) | **done: Breath and Bell, built 2026-11-22**, page after DistroKid |
+| Breathing, volume 2 | the two patterns left out: 6-6-6-6 and the physiological sigh (as short repeated sets with rests), maybe over white or green | nothing (`zen/chime.py`) | open |
+| Starlight accents | white or pink noise with sparse, quiet high melodic accents (music box, glass, celesta) at irregular 20-60 s gaps, so nothing sounds looped. Closest to the user's "white noise with little high-pitched melodies" | `zen.chime.strike` plus a random scheduler (and a few more pitches) | open, now cheap: the synth exists |
 | Notched, volume 2 | notches at 3, 4, 10, 11 and 12 kHz, plus a notched pink at 6 kHz. Covers 3 to 12 kHz with volume 1 | nothing (`Bed(notch_hz=)`) | open. Same careful framing as volume 1 |
 | Focus blocks | 25 min pink or brown, a soft chime at the end, 5 min break tracks between | the chime synth | open |
 | Sleep edition | 1-hour versions of the darkest beds, no accents, long fade | check store limits on track length first | open. YouTube may be the better home for 8-10 hours |
@@ -94,6 +96,29 @@ Measured on Colors of Calm (percent of energy per band):
 s over a steady bed (2026-11-18). It shows as LRA 1.4-1.8 LU against 0.3 on
 an old steady track. Default every new noise album to `drift_db=1.5` unless
 the user says otherwise.
+
+## Chimes
+
+`zen/chime.py` (built for Breath and Bell, 2026-11-22): `strike(hz, ring)`
+is an additive struck-bar chime (partials 1, 2, 2.76, 5.40, the upper ones
+decaying faster, 12 ms raised-cosine attack, 5 kHz lowpass);
+`Chimes(Breath(in, hold, out, rest))` schedules it, a high strike (A5, 880
+Hz) where each inhale starts and a lower one (D5, 587 Hz) where each exhale
+starts, holds silent. A spec adds it as `Track(..., chimes=Chimes(...))`;
+`--variant N:field=value` reaches chime fields too (`1:level_db=12`).
+
+- **Level: +6 dB** strike peak over the bed's RMS, the user's pick over 0
+  and +12 (2026-11-22). At +6 the chimes add only 1 to 6 points in
+  200 Hz-1 kHz and nothing measurable above 4 kHz: sparse strikes barely
+  move a 30 s band average, so a chime album is described by its bed.
+- **Timing is exact**, only strike loudness varies (+-0.75 dB): it is a
+  guide to breathe to. 5 s of bed first, then whole breaths only, the last
+  strike ringing out before the fade, so a 10-minute track holds fewer
+  breaths than 600 / period (4-7-8: 30, box: 36).
+- **Brown beds leave more peak headroom used**: chimes over brown peaked at
+  -2.0 dBFS against -5 over pink, since brown's RMS sits closer to its
+  peak after the 25 Hz highpass. Still under the -1.5 ceiling; a louder
+  chime over brown may hit it and stop short of -18 LUFS.
 
 ## Mastering
 
@@ -142,7 +167,10 @@ the picture**, and the promo bar on top.
   and only add more of the same scene on the left and right. No text."
 
 They save both as `~/Desktop/<SLUG>/cover/square` and `.../landscape` (any
-image format; ChatGPT gives 1254x1254 and 1536x1024). `python -m zen.cover
+image format; ChatGPT gives 1254x1254 and 1536x1024). Check the folder
+first: on Breath and Bell (2026-11-22) only the square came back, saved as
+`cover`. Rename it; with no landscape, `zen.cover` centre-crops the square
+to 3:2, which works when the subject sits mid-height as the prompt asks. `python -m zen.cover
 <spec>` then writes:
 
 | file | size | for |

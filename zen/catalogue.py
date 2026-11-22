@@ -29,7 +29,8 @@ def main() -> None:
         live.add(p.stem)
         date = re.search(r"^date:\s*'?\"?([^'\"\n#]+)", s, re.M)
         spotify = re.search(r"open\.spotify\.com/album/(\w+)", s)
-        tracks = re.findall(r"^\|\s*\*\*(.+?)\*\*\s*\|", s, re.M)
+        # dict.fromkeys: a page with a band table names each track twice
+        tracks = list(dict.fromkeys(re.findall(r"^\|\s*\*\*(.+?)\*\*\s*\|", s, re.M)))
         store = "-"
         if "--store" in sys.argv and spotify:
             url = ("https://open.spotify.com/oembed?url=https://open.spotify.com/album/"

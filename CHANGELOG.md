@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.3.0
+
+2026-11-22: chimes for zen albums.
+
+- `zen.chime`: a soft struck-bar chime synth and a breathing-pattern
+  scheduler (high strike on the inhale, lower on the exhale, holds silent).
+  `zen.album` tracks take `chimes=`, `--variant` reaches chime fields, and
+  chime tracks report whole breaths and the bed's own bands.
+- `zen.cover` falls back to a 3:2 crop of the square when there is no
+  landscape image.
+- `zen.catalogue` no longer counts a page's tracks twice when it carries a
+  band table.
+- Album spec: `zen/albums/breath_and_bell.py`.
+
 ## 0.2.0
 
 2026-11-18: one repo for songs and zen albums.

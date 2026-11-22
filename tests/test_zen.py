@@ -65,3 +65,34 @@ def test_bar_matches_reference_geometry():
     # Glyph starts match the reference within 1 px; the last glyph ends at
     # ~687 against 691 because the reference is a soft upscaled webp.
     assert abs(cols.min() / k - 103) <= 1.5 and abs(cols.max() / k - 691) <= 5
+
+
+from zen.chime import Breath, Chimes, breath_times, mix, strike  # noqa: E402
+
+
+def test_strike_starts_soft_and_rings_out():
+    """No click at the onset, and gone well before the next strike."""
+    x = strike(880.0, 4.0, 1)[:, 0]
+    assert abs(x[0]) < 1e-3
+    assert np.max(np.abs(x[int(4.0 * SR):])) < 10 ** (-50 / 20)
+
+
+def test_breaths_are_whole_and_land_on_the_phases():
+    c = Chimes(Breath(4, 7, 8))
+    ins, outs, n = breath_times(600.0, c)
+    assert n == len(ins) == len(outs) == 30
+    assert ins[0] == c.lead_in and outs[0] == c.lead_in + 11
+    assert ins[-1] + 19 + c.ring + 3 <= 600
+
+
+def test_no_exhale_chime_without_an_exhale():
+    assert breath_times(60.0, Chimes(Breath(5)))[1] == []
+
+
+def test_chimes_sit_level_db_over_the_bed():
+    bed = render(30.0, Bed("pink"), 3)
+    x, _ = mix(bed, Chimes(Breath(5, 0, 5), jitter_db=0.0, level_db=6.0), 3)
+    k = 10 * SR
+    rms = np.sqrt(np.mean(bed[k:-k] ** 2))
+    added = np.max(np.abs((x - bed)))
+    assert abs(20 * np.log10(added / rms) - 6.0) < 0.1
